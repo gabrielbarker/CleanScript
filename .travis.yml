@@ -1,4 +1,13 @@
-language: nodejs
+language: node_js
+
+node_js:
+  - "node"
+  - "10"
+  - "8"
+
+install:
+  - npm uninstall typescript --no-save
+  - npm install
 
 before_script:
   - npm run setup
