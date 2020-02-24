@@ -16,7 +16,8 @@
   "reporter": [
     "html",
     "text",
-    "text-summary"
+    "text-summary",
+    "json"
   ],
   "all": true,
   "instrument": true

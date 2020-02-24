@@ -8,8 +8,8 @@
     "build-watch": "tsc --watch",
     "pretest": "npm run build",
     "test-only": "mocha -r ts-node/register src/test/**/*.ts",
-    "test": "tsc && nyc npm run test-only",
-    "coveralls": "cat ./coverage/index.html | ./node_modules/.bin/coveralls"
+    "test": "nyc npm run test-only",
+    "posttest": "nyc report --reporter=json"
   },
   "author": "",
   "license": "ISC",
@@ -20,8 +20,7 @@
     "@types/mocha": "^7.0.1",
     "@types/node": "^13.7.4",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.9",
-    "istanbul": "^0.4.5",
+    "codecov": "^3.6.5",
     "mocha": "^7.0.1",
     "nyc": "^15.0.0",
     "ts-node": "^8.6.2",

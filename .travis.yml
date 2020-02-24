@@ -8,14 +8,13 @@ node_js:
 install:
   - npm uninstall typescript --no-save
   - npm install
-  - npm install codecov -g
 
 before_script:
   - npm run setup
   - npm run build
 
 script:
-  - npm run test-only
+  - npm run test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
