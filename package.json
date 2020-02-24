@@ -9,7 +9,7 @@
     "pretest": "npm run build",
     "test-only": "mocha -r ts-node/register src/test/**/*.ts",
     "test": "tsc && nyc npm run test-only",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+    "coveralls": "cat ./coverage/index.html | ./node_modules/.bin/coveralls"
   },
   "author": "",
   "license": "ISC",
