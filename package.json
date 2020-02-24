@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register src/test/**/*.ts"
+    "setup": "npm install",
+    "build": "tsc",
+    "build-watch": "tsc --watch",
+    "pretest": "npm run build",
+    "test-only": "mocha -r ts-node/register src/test/**/*.ts",
+    "test": "tsc && npm run test-only"
   },
   "author": "",
   "license": "ISC",
