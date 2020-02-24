@@ -8,6 +8,7 @@ node_js:
 install:
   - npm uninstall typescript --no-save
   - npm install
+  - npm install codecov -g
 
 before_script:
   - npm run setup
@@ -16,4 +17,6 @@ before_script:
 script:
   - npm run test-only
 
-after_success: "npm run coveralls"
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  - codecov
