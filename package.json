@@ -9,7 +9,8 @@
     "pretest": "npm run build",
     "test-only": "mocha -r ts-node/register src/test/**/*.ts",
     "test": "nyc npm run test-only",
-    "posttest": "nyc report --reporter=json"
+    "posttest": "nyc report --reporter=json",
+    "start": "npm run build && node ./dist/main/index.js"
   },
   "author": "",
   "license": "ISC",
