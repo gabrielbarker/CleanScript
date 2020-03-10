@@ -51,8 +51,7 @@ export default class CodeBlock {
   }
 
   private findFirstIndex(): void {
-    let declarationStart = this.fileText.lastIndexOf("\n", this.openCurlyBracketIndex) + 1;
-    if (declarationStart === undefined) declarationStart = 0;
+    let declarationStart = (this.fileText.lastIndexOf("\n", this.openCurlyBracketIndex) + 1) | 0;
     if (this.isMultipleLineDeclaration(declarationStart)) {
       const openBracketIndex = this.fileText.lastIndexOf("(", this.openCurlyBracketIndex);
       declarationStart = this.fileText.lastIndexOf("\n", openBracketIndex);

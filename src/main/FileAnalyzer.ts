@@ -3,12 +3,12 @@ import fs, { readdirSync } from "fs";
 import FileData from "./FileData";
 
 export default class FileAnalyzer {
-  public static getBlocksFromDirectory(path: string): FileData[] {
+  public static getDataFromDirectory(path: string): FileData[] {
     const fileNames = readdirSync(path);
-    return fileNames.map(name => this.getBlocksFromFile(path + name));
+    return fileNames.map(name => this.getDataFromFile(path + name));
   }
 
-  public static getBlocksFromFile(path: string): FileData {
+  public static getDataFromFile(path: string): FileData {
     const fileText = fs.readFileSync(path).toString();
     const codeSeparator = new CodeSeparator(fileText);
     const blocks = codeSeparator.getCodeBlocks();
