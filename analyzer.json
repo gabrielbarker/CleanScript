@@ -1,7 +1,7 @@
 {
   "lineLimit": {
-    "function": 10,
+    "function": 6,
     "class": 50,
-    "loop": 6
+    "loop": 5
   }
 }
