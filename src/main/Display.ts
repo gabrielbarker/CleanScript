@@ -11,8 +11,8 @@ export default class Display {
     blocksToDisplay.forEach(block => this.addCodeBlockDataStrings(block));
   }
 
-  public print(): void {
-    this.displayBlocks();
+  public printInvalidBlocks(): void {
+    if (this.typeStrings.length) this.displayBlocks();
   }
 
   private addCodeBlockDataStrings(block: CodeBlock) {
@@ -23,7 +23,7 @@ export default class Display {
 
   private displayBlocks() {
     this.printFileNameInBox();
-    for (let i = 0; i < this.declarationStrings.length; i++) {
+    for (let i = 0; i < this.typeStrings.length; i++) {
       console.log(this.typeStrings[i]);
       console.log(this.declarationStrings[i]);
       console.log(this.numberOfLinesStrings[i]);
