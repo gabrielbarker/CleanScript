@@ -1,7 +1,7 @@
 {
-  "functionLineLimit": 6,
-  "loopLineLimit": 6,
-  "classLineLimit": 50,
-  "classIndentationLimit": 3,
-  "numberOfIfs": 10
+  "lineLimit": {
+    "function": 10,
+    "class": 50,
+    "loop": 6
+  }
 }
