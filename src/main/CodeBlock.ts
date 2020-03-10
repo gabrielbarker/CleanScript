@@ -6,6 +6,8 @@ export default class CodeBlock {
   private openCurlyBracketIndex: number;
   private firstIndex: number = this.openCurlyBracketIndex;
   private lastIndex: number;
+  private numberOfLines: number;
+  private declaration: string;
   private block: string = "";
   private indentationLevel: number;
   private blockType: BlockType;
@@ -22,7 +24,9 @@ export default class CodeBlock {
     this.lastIndex = lastIndex;
     this.indentationLevel = indentationLevel;
     this.findWholeBlock();
+    this.declaration = this.findDeclaration();
     this.blockType = blockTypeAnalyzer.typeOf(this);
+    this.numberOfLines = this.calculateNumberOfLines();
   }
 
   public getBlock(): string {
@@ -38,10 +42,14 @@ export default class CodeBlock {
   }
 
   public getNumberOfLines(): number {
-    return this.block.split("").filter(character => character === "\n").length + 1;
+    return this.numberOfLines;
   }
 
   public getDeclaration(): string {
+    return this.declaration;
+  }
+
+  private findDeclaration(): string {
     return this.fileText.substring(this.firstIndex, this.openCurlyBracketIndex).trim();
   }
 
@@ -52,15 +60,23 @@ export default class CodeBlock {
 
   private findFirstIndex(): void {
     let declarationStart = (this.fileText.lastIndexOf("\n", this.openCurlyBracketIndex) + 1) | 0;
-    if (this.isMultipleLineDeclaration(declarationStart)) {
-      const openBracketIndex = this.fileText.lastIndexOf("(", this.openCurlyBracketIndex);
-      declarationStart = this.fileText.lastIndexOf("\n", openBracketIndex);
-    }
+    if (this.isMultipleLineDeclaration(declarationStart))
+      declarationStart = this.getMultilineDeclarationStartIndex();
     this.firstIndex = declarationStart;
+  }
+
+  private getMultilineDeclarationStartIndex(): number {
+    const openBracketIndex = this.fileText.lastIndexOf("(", this.openCurlyBracketIndex);
+    return this.fileText.lastIndexOf("\n", openBracketIndex);
   }
 
   private isMultipleLineDeclaration(declarationStart: number): boolean {
     const declaration = this.fileText.substring(declarationStart, this.openCurlyBracketIndex);
     return declaration.includes(")") && !declaration.includes("(");
+  }
+
+  private calculateNumberOfLines(): number {
+    const numberOfLines = this.block.split("").filter(character => character === "\n").length + 1;
+    return numberOfLines > 2 ? numberOfLines : 0;
   }
 }
