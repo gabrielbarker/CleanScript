@@ -77,6 +77,6 @@ export default class CodeBlock {
 
   private calculateNumberOfLines(): number {
     const numberOfLines = this.block.split("").filter(character => character === "\n").length + 1;
-    return numberOfLines > 2 ? numberOfLines : 0;
+    return numberOfLines > 2 ? numberOfLines - 2 : 0;
   }
 }
