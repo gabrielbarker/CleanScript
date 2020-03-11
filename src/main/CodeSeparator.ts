@@ -6,6 +6,7 @@ export default class CodeSeparator {
   private codeBlocks: CodeBlock[] = [];
   private startIndices: number[] = [];
   private codeBlockFactory: CodeBlockFactory;
+  private currentIndentation: number = 0;
 
   constructor(fileText: string) {
     this.fileText = fileText;
@@ -18,27 +19,24 @@ export default class CodeSeparator {
   }
 
   private findAllCodeBlocks(): void {
-    let indentation: number = 0;
-
-    this.fileText.split("").forEach((character, index) => {
-      if (character === "{") {
-        this.handleIndentationIncrease(index, indentation);
-        indentation++;
-      } else if (character === "}") {
-        indentation--;
-        this.handleIndentationDecrease(index, indentation);
-      }
-    });
+    this.fileText.split("").forEach((character, index) => this.handleBlockChange(character, index));
   }
 
-  private handleIndentationIncrease(index: number, indentation: number) {
+  private handleBlockChange(character: string, index: number) {
+    if (character === "{") this.handleIndentationIncrease(index);
+    else if (character === "}") this.handleIndentationDecrease(index);
+  }
+
+  private handleIndentationIncrease(index: number) {
     this.codeBlockFactory.increaseIndentation();
     this.startIndices.push(index);
+    this.currentIndentation++;
   }
 
-  private handleIndentationDecrease(index: number, indentation: number) {
+  private handleIndentationDecrease(index: number) {
+    this.currentIndentation--;
     this.codeBlockFactory.decreaseIndentation();
-    const block = this.codeBlockFactory.getBlock(this.startIndices[indentation], index);
+    const block = this.codeBlockFactory.getBlock(this.startIndices[this.currentIndentation], index);
     this.codeBlocks.push(block);
     this.startIndices.pop();
   }
