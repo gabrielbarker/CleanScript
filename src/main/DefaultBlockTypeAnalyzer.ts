@@ -7,7 +7,7 @@ export default class DefaultBlockTypeAnalyzer implements BlockTypeAnalyzer {
   private blockType: BlockType | null = null;
 
   public typeOf(block: CodeBlock): BlockType {
-    this.declaration = " " + block.getDeclaration();
+    this.declaration = " " + block.getDeclaration() + " ";
     this.blockType = BlockType.InvalidType;
     this.setBlockType();
     return this.blockType;
@@ -53,9 +53,12 @@ export default class DefaultBlockTypeAnalyzer implements BlockTypeAnalyzer {
     this.blockType = BlockType.FunctionType;
   }
 
-  private getDeclarationSignifierSet(keywords: string[], bracketType: "(" | "<") {
+  private getDeclarationSignifierSet(keywords: string[], bracketType: "(" | "<"): string[] {
     const signifiers: string[] = [];
-    keywords.forEach(keyword => signifiers.concat([` ${keyword} `, ` ${keyword}${bracketType}`]));
+    keywords.forEach(keyword => {
+      signifiers.push(` ${keyword} `);
+      signifiers.push(` ${keyword}${bracketType}`);
+    });
     return signifiers;
   }
 

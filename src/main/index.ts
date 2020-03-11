@@ -1,7 +1,6 @@
 import FileAnalyzer from "./FileAnalyzer";
 import Display from "./Display";
 import InvalidBlockSelector from "./InvalidBlockSelector";
-import CodeBlockSelector from "./CodeBlockSelector";
 
 const codeAnalyzerPath = `/Users/gbarker/GitHub/CodeAnalyzer/src/main/`;
 const revmanPath = `/Users/gbarker/git/revman/force-app/main/default/classes/`;

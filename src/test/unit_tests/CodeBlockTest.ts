@@ -14,7 +14,7 @@ describe("Code Block: constructor - single class", () => {
 
   const codeBlock: CodeBlock = getSingleCodeBlock(fileText);
 
-  assertCorrectValues(codeBlock, fileText, declaration, 3);
+  assertCorrectValues(codeBlock, fileText, declaration, 1);
 });
 
 describe("Code Block: constructor - multi-line declaration", () => {
@@ -30,7 +30,7 @@ describe("Code Block: constructor - multi-line declaration", () => {
 
   const codeBlock: CodeBlock = getSingleCodeBlock(fileText);
 
-  assertCorrectValues(codeBlock, fileText, declaration, 5);
+  assertCorrectValues(codeBlock, fileText, declaration, 3);
 });
 
 function getSingleCodeBlock(fileText: string): CodeBlock {
