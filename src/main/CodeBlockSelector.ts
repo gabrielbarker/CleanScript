@@ -13,7 +13,7 @@ export default class CodeBlockSelector {
     return new CodeBlockSelector(codeBlocks);
   }
 
-  public withType(type: BlockType): CodeBlockSelector {
+  public withType(type: BlockType | string): CodeBlockSelector {
     const codeBlocks = this.codeBlocks.filter(block => block.getType() === type);
     return new CodeBlockSelector(codeBlocks);
   }

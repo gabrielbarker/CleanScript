@@ -5,5 +5,6 @@ export enum BlockType {
   FunctionType = "function",
   IfType = "if statement",
   LoopType = "loop",
-  CollectionType = "collection"
+  CollectionType = "collection",
+  InvalidType = "invalid type"
 }

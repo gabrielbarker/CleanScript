@@ -3,43 +3,66 @@ import CodeBlock from "./CodeBlock";
 import BlockTypeAnalyzer from "./BlockTypeAnalyzer";
 
 export default class DefaultBlockTypeAnalyzer implements BlockTypeAnalyzer {
-  private blockDeclaration: string = "";
+  private declaration: string = "";
+  private blockType: BlockType | null = null;
 
   public typeOf(block: CodeBlock): BlockType {
-    this.blockDeclaration = " " + block.getDeclaration();
-    if (this.blockDeclaration.includes(" class ")) return BlockType.ClassType;
-    if (this.blockDeclaration.includes(" enum ")) return BlockType.EnumType;
-    if (this.blockDeclaration.includes(" interface ")) return BlockType.InterfaceType;
-    if (this.functionIncludesKeyword(this.blockDeclaration, "if")) return BlockType.IfType;
-    if (this.genericIncludesKeywords(this.blockDeclaration, ["List", "Set"]))
-      return BlockType.CollectionType;
-    if (this.functionIncludesKeywords(this.blockDeclaration, ["for", "while"]))
-      return BlockType.LoopType;
-    if (this.blockDeclaration.includes(" do")) return BlockType.LoopType;
-    return BlockType.FunctionType;
+    this.declaration = " " + block.getDeclaration() + " ";
+    this.blockType = BlockType.InvalidType;
+    this.setBlockType();
+    return this.blockType;
   }
 
-  private functionIncludesKeywords(text: string, keywords: string[]) {
-    let includes = false;
+  private setBlockType(): void {
+    this.setTypeForTopLevelType();
+    this.setTypeForIfType();
+    this.setTypeForCollectionType();
+    this.setTypeForLoopType();
+    this.setTypeForFunctionType();
+  }
+
+  private setTypeForTopLevelType(): void {
+    if (this.blockType !== BlockType.InvalidType) return;
+    if (this.declaration.includes(" class ")) this.blockType = BlockType.ClassType;
+    if (this.declaration.includes(" enum ")) this.blockType = BlockType.EnumType;
+    if (this.declaration.includes(" interface ")) this.blockType = BlockType.InterfaceType;
+  }
+
+  private setTypeForLoopType(): void {
+    if (this.blockType !== BlockType.InvalidType) return;
+    const loopSignifiers = this.getDeclarationSignifierSet(["for", "while"], "(");
+    if (this.declarationIncludesAnyOf(loopSignifiers)) this.blockType = BlockType.LoopType;
+    if (this.declaration.includes(" do ")) this.blockType = BlockType.LoopType;
+  }
+
+  private setTypeForCollectionType(): void {
+    if (this.blockType !== BlockType.InvalidType) return;
+    const collectionSignifiers = this.getDeclarationSignifierSet(["List", "Set"], "<");
+    if (this.declarationIncludesAnyOf(collectionSignifiers))
+      this.blockType = BlockType.CollectionType;
+  }
+
+  private setTypeForIfType(): void {
+    if (this.blockType !== BlockType.InvalidType) return;
+    const ifSignifiers = this.getDeclarationSignifierSet(["if"], "(");
+    if (this.declarationIncludesAnyOf(ifSignifiers)) this.blockType = BlockType.IfType;
+  }
+
+  private setTypeForFunctionType(): void {
+    if (this.blockType !== BlockType.InvalidType) return;
+    this.blockType = BlockType.FunctionType;
+  }
+
+  private getDeclarationSignifierSet(keywords: string[], bracketType: "(" | "<"): string[] {
+    const signifiers: string[] = [];
     keywords.forEach(keyword => {
-      if (this.functionIncludesKeyword(text, keyword)) includes = true;
+      signifiers.push(` ${keyword} `);
+      signifiers.push(` ${keyword}${bracketType}`);
     });
-    return includes;
+    return signifiers;
   }
 
-  private functionIncludesKeyword(text: string, keyword: string) {
-    return text.includes(` ${keyword}(`) || text.includes(` ${keyword} `);
-  }
-
-  private genericIncludesKeywords(text: string, keywords: string[]) {
-    let includes = false;
-    keywords.forEach(keyword => {
-      if (this.genericIncludesKeyword(text, keyword)) includes = true;
-    });
-    return includes;
-  }
-
-  private genericIncludesKeyword(text: string, keyword: string) {
-    return text.includes(` ${keyword}<`) || text.includes(` ${keyword} `);
+  private declarationIncludesAnyOf(stringSet: string[]): boolean {
+    return stringSet.some(s => this.declaration.includes(s));
   }
 }
