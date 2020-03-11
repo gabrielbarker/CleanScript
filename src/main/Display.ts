@@ -24,11 +24,15 @@ export default class Display {
   private displayBlocks() {
     this.printFileNameInBox();
     for (let i = 0; i < this.typeStrings.length; i++) {
-      console.log(this.typeStrings[i]);
-      console.log(this.declarationStrings[i]);
-      console.log(this.numberOfLinesStrings[i]);
-      console.log();
+      this.printNthBlockDeatails(i);
     }
+  }
+
+  private printNthBlockDeatails(index: number) {
+    console.log(this.typeStrings[index]);
+    console.log(this.declarationStrings[index]);
+    console.log(this.numberOfLinesStrings[index]);
+    console.log();
   }
 
   private printFileNameInBox() {
