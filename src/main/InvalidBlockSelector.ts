@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import CodeBlock from "./CodeBlock";
 import CodeBlockSelector from "./CodeBlockSelector";
-import { BlockType, blockTypeOf } from "./BlockType";
+import { BlockType } from "./BlockType";
 
 export default class InvalidBlockSelector {
   private static readonly CONFIG_PATH = "/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json";
@@ -15,16 +15,16 @@ export default class InvalidBlockSelector {
 
   public getBlocksOverLineLimit(): CodeBlock[] {
     const limits: any = this.analyzerConfig["lineLimit"];
-    const blockTypes: BlockType[] = Object.keys(limits).map(type => blockTypeOf(type));
+    const blockTypes: string[] = Object.keys(limits);
     return this.getBlocksOverLineLimitForTypes(blockTypes);
   }
 
-  private getBlocksOverLineLimitForTypes(blockTypes: BlockType[]): CodeBlock[] {
+  private getBlocksOverLineLimitForTypes(blockTypes: string[]): CodeBlock[] {
     const blocks = blockTypes.map(type => this.getBlocksOverLineLimitOfType(type));
     return Array.prototype.concat.apply([], blocks);
   }
 
-  private getBlocksOverLineLimitOfType(blockType: BlockType): CodeBlock[] {
+  private getBlocksOverLineLimitOfType(blockType: string): CodeBlock[] {
     const limit: number = this.analyzerConfig["lineLimit"][blockType];
     const codeBlockSelector = new CodeBlockSelector(this.codeBlocks);
     return codeBlockSelector
