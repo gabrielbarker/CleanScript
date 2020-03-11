@@ -34,7 +34,8 @@ export default class CodeSeparator {
   private handleIndentationDecrease(index: number) {
     this.currentIndentation--;
     this.codeBlockFactory.decreaseIndentation();
-    const block = this.codeBlockFactory.getBlock(this.startIndices[this.currentIndentation], index);
+    const startOfBlock: number = this.startIndices[this.currentIndentation];
+    const block: CodeBlock = this.codeBlockFactory.getBlock(startOfBlock, index);
     this.codeBlocks.push(block);
     this.startIndices.pop();
   }
