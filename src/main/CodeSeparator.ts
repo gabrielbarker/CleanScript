@@ -23,6 +23,7 @@ export default class CodeSeparator {
   private handleBlockChange(character: string, index: number) {
     if (character === "{") this.handleIndentationIncrease(index);
     else if (character === "}") this.handleIndentationDecrease(index);
+    else if (character === "\n") this.codeBlockFactory.increaseLineNumber();
   }
 
   private handleIndentationIncrease(index: number) {

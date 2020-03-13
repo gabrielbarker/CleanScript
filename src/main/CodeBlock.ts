@@ -2,22 +2,24 @@ import BlockTypeAnalyzer from "./BlockTypeAnalyzer";
 import { BlockType } from "./BlockType";
 
 export default class CodeBlock {
-  private fileText: string;
-  private openCurlyBracketIndex: number;
-  private firstIndex: number = this.openCurlyBracketIndex;
-  private lastIndex: number;
-  private numberOfLines: number;
-  private declaration: string;
   private block: string = "";
-  private indentationLevel: number;
   private blockType: BlockType;
+  private declaration: string;
+  private fileText: string;
+  private firstIndex: number = 0;
+  private indentationLevel: number;
+  private lastIndex: number;
+  private lineNumber: number;
+  private numberOfLines: number;
+  private openCurlyBracketIndex: number;
 
   constructor(
     fileText: string,
     blockTypeAnalyzer: BlockTypeAnalyzer,
     openCurlyBracketIndex: number,
     lastIndex: number,
-    indentationLevel: number
+    indentationLevel: number,
+    lineNumber: number
   ) {
     this.fileText = fileText;
     this.openCurlyBracketIndex = openCurlyBracketIndex;
@@ -27,6 +29,7 @@ export default class CodeBlock {
     this.declaration = this.findDeclaration();
     this.blockType = blockTypeAnalyzer.typeOf(this);
     this.numberOfLines = this.calculateNumberOfLines();
+    this.lineNumber = lineNumber - this.numberOfLines - 1;
   }
 
   public getBlock(): string {
@@ -43,6 +46,10 @@ export default class CodeBlock {
 
   public getNumberOfLines(): number {
     return this.numberOfLines;
+  }
+
+  public getLineNumber(): number {
+    return this.lineNumber;
   }
 
   public getDeclaration(): string {
