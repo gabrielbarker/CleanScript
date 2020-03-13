@@ -2,37 +2,28 @@ import CodeBlock from "./CodeBlock";
 
 export default class Display {
   private fileNameString: string = "";
-  private typeStrings: string[] = [];
-  private declarationStrings: string[] = [];
-  private numberOfLinesStrings: string[] = [];
+  private detailsBlocks: string[] = [];
 
   constructor(fileName: string, blocksToDisplay: CodeBlock[]) {
-    this.fileNameString = "File Name: " + fileName;
+    this.fileNameString = fileName;
     blocksToDisplay.forEach(block => this.addCodeBlockDataStrings(block));
   }
 
   public printInvalidBlocks(): void {
-    if (this.typeStrings.length) this.displayBlocks();
+    if (this.detailsBlocks.length) this.displayBlocks();
   }
 
   private addCodeBlockDataStrings(block: CodeBlock) {
-    this.typeStrings.push("Type: " + block.getType());
-    this.declarationStrings.push("Declaration: " + block.getDeclaration());
-    this.numberOfLinesStrings.push("Number of Lines: " + block.getNumberOfLines());
+    let detailsString = "Type: " + block.getType();
+    detailsString += "\nDeclaration: " + block.getDeclaration();
+    detailsString += "\nLines: " + block.getLineNumber();
+    detailsString += "\nNumber of Lines: " + block.getNumberOfLines() + "\n";
+    this.detailsBlocks.push(detailsString);
   }
 
   private displayBlocks() {
     this.printFileNameInBox();
-    for (let i = 0; i < this.typeStrings.length; i++) {
-      this.printNthBlockDeatails(i);
-    }
-  }
-
-  private printNthBlockDeatails(index: number) {
-    console.log(this.typeStrings[index]);
-    console.log(this.declarationStrings[index]);
-    console.log(this.numberOfLinesStrings[index]);
-    console.log();
+    this.detailsBlocks.forEach(block => console.log(block));
   }
 
   private printFileNameInBox() {
