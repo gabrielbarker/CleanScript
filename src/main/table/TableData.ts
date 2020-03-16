@@ -5,14 +5,17 @@ export type FileTableData = { file: string; invalid: TypeTableData[] };
 
 export default class TableDisplay {
   private tableData: FileTableData[];
+
   constructor(filesData: FileData[]) {
     const fileDataTable: any[] = [];
-    filesData.forEach(fileData =>
-      fileDataTable.push({
-        file: fileData.getFileName(),
-        invalid: this.getTypeObjects(fileData)
-      })
-    );
+    filesData.forEach(fileData => {
+      if (this.getTypeObjects(fileData).length) {
+        fileDataTable.push({
+          file: fileData.getFileName(),
+          invalid: this.getTypeObjects(fileData)
+        });
+      }
+    });
     this.tableData = fileDataTable;
   }
 
