@@ -1,4 +1,4 @@
-import FileData from "../FileData";
+import FileData from "./FileData";
 
 export type TypeTableData = { type: string; count: number; "line numbers": string };
 export type FileTableData = { file: string; invalid: TypeTableData[] };
