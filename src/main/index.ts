@@ -1,6 +1,6 @@
 import DataRetriever from "./DataRetriever";
 import InvalidBlockSelector from "./InvalidBlockSelector";
-import TableData from "./table/TableData";
+import TableData from "./TableData";
 import Taybl from "taybl";
 import FileData from "./FileData";
 
