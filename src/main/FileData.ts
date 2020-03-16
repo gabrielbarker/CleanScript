@@ -20,8 +20,7 @@ export default class FileData {
   private extractFileName(rawName: string) {
     const firstDot = rawName.lastIndexOf(".");
     const lastSlash = rawName.lastIndexOf("/");
-    const start = lastSlash === -1 ? 0 : lastSlash;
     const end = firstDot === -1 ? rawName.length : firstDot;
-    return rawName.substring(start + 1, end);
+    return rawName.substring(lastSlash + 1, end);
   }
 }
