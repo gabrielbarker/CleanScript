@@ -1,4 +1,3 @@
-import { FileTableData } from "./TableData";
 import TableData from "./TableData";
 import TableRow from "./TableRow";
 export default class TableRenderer {

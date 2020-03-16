@@ -14,10 +14,7 @@ export default class DataRetriever {
   }
 
   private getDataFromPath(path: string) {
-    console.log(path);
     const fileStats = lstatSync(path);
-    console.log(fileStats.isFile());
-
     if (fileStats.isFile()) this.getDataFromFile(path);
     else if (fileStats.isDirectory()) this.getDataFromDirectory(path);
   }

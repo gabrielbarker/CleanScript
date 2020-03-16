@@ -1,5 +1,5 @@
 import { FileTableData } from "./TableData";
-import TableData from "./TableData";
+
 export default class TableRow {
   private fileTableData: FileTableData;
   private rows: string[] = [];
