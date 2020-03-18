@@ -1,7 +1,7 @@
 {
   "name": "codeanalyzer",
   "version": "1.0.0",
-  "description": "",
+  "description": "A tool that analyses your code based on function length and indentation depth, checking for basic code smells.",
   "scripts": {
     "setup": "npm install",
     "build": "tsc",
