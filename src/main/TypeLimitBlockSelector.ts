@@ -6,17 +6,23 @@ export default class TypeLimitBlockSelector {
   private static readonly CONFIG_PATH = "/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json";
   private analyzerConfig: any;
   private codeBlocks: CodeBlock[];
+  private blocksOverLimit: CodeBlock[] = [];
 
   constructor(codeBlocks: CodeBlock[]) {
     const configData = readFileSync(TypeLimitBlockSelector.CONFIG_PATH).toString();
     this.analyzerConfig = JSON.parse(configData);
     this.codeBlocks = codeBlocks;
+    this.findBlocksOverTypeLimit();
   }
 
   public getBlocksOverTypeLimit(): CodeBlock[] {
+    return this.blocksOverLimit;
+  }
+
+  private findBlocksOverTypeLimit(): void {
     const limits: any = this.analyzerConfig["typeLimit"];
     const blockTypes: string[] = Object.keys(limits);
-    return this.getBlocksOverTypeLimitForTypes(blockTypes);
+    this.blocksOverLimit = this.getBlocksOverTypeLimitForTypes(blockTypes);
   }
 
   private getBlocksOverTypeLimitForTypes(blockTypes: string[]): CodeBlock[] {
