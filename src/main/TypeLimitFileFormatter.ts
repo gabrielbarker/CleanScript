@@ -1,26 +1,23 @@
 import FileData from "./FileData";
 import CodeBlock from "./CodeBlock";
+import FileFormatter from "./FileFormatter";
 
 export type TypeTableData = { Type: string; Count: number };
 export type FileTableData = { "File Name": string; invalid: TypeTableData[] };
 
-export default class TypeLimitFileFormatter {
-  private fileData: FileData;
+export default class TypeLimitFileFormatter implements FileFormatter {
   private typeTable: any = {};
   private typeTableData: TypeTableData[] = [];
 
-  constructor(fileData: FileData) {
-    this.fileData = fileData;
-    this.getTypeTable();
+  public getFileTableData(fileData: FileData): FileTableData {
+    this.getTypeTable(fileData);
     this.typeTableData = this.getTypeTableData();
+    return { "File Name": fileData.getFileName(), invalid: this.typeTableData };
   }
 
-  public getFileTableData(): FileTableData {
-    return { "File Name": this.fileData.getFileName(), invalid: this.typeTableData };
-  }
-
-  private getTypeTable(): void {
-    this.fileData.getCodeBlocks().forEach(block => this.updateTypeTable(block));
+  private getTypeTable(fileData: FileData): void {
+    this.typeTable = {};
+    fileData.getCodeBlocks().forEach(block => this.updateTypeTable(block));
   }
 
   private updateTypeTable(block: CodeBlock): void {
