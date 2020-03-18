@@ -3,7 +3,7 @@ export enum BlockType {
   InterfaceType = "interface",
   EnumType = "enum",
   FunctionType = "function",
-  IfType = "if statement",
+  IfType = "if",
   LoopType = "loop",
   CollectionType = "collection",
   InvalidType = "invalid type"
