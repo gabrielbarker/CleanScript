@@ -25,7 +25,8 @@
     "mocha": "^7.0.1",
     "nyc": "^15.0.0",
     "ts-node": "^8.6.2",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.2",
+    "minimist": ">=1.2.3"
   },
   "dependencies": {
     "taybl": "0.0.2"
