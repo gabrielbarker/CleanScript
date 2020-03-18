@@ -4,7 +4,7 @@ import CodeBlock from "./CodeBlock";
 export type TypeTableData = { Type: string; Count: number; "Line Numbers": string };
 export type FileTableData = { "File Name": string; invalid: TypeTableData[] };
 
-export default class TableFileFormatter {
+export default class LineLimitFileFormatter {
   private fileData: FileData;
   private typeTable: any = {};
   private typeTableData: TypeTableData[] = [];

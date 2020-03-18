@@ -1,12 +1,12 @@
 import FileData from "./FileData";
-import TableFileFormatter, { FileTableData } from "./TableFileFormatter";
+import LineLimitFileFormatter, { FileTableData } from "./LineLimitFileFormatter";
 
-export default class TableDisplay {
+export default class TableFormatter {
   private tableData: FileTableData[] = [];
 
   constructor(filesData: FileData[]) {
     filesData.forEach(fileData => {
-      const data = new TableFileFormatter(fileData).getFileTableData();
+      const data = new LineLimitFileFormatter(fileData).getFileTableData();
       if (data.invalid.length) this.tableData.push(data);
     });
   }
