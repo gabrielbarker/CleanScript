@@ -2,13 +2,14 @@ import { readFileSync } from "fs";
 import CodeBlock from "./CodeBlock";
 import CodeBlockSelector from "./CodeBlockSelector";
 
-export default class InvalidBlockSelector {
+export default class LineLimitBlockSelector {
   private static readonly CONFIG_PATH = "/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json";
   private analyzerConfig: any;
   private codeBlocks: CodeBlock[];
 
   constructor(codeBlocks: CodeBlock[]) {
-    this.analyzerConfig = JSON.parse(readFileSync(InvalidBlockSelector.CONFIG_PATH).toString());
+    const configData = readFileSync(LineLimitBlockSelector.CONFIG_PATH).toString();
+    this.analyzerConfig = JSON.parse(configData);
     this.codeBlocks = codeBlocks;
   }
 
