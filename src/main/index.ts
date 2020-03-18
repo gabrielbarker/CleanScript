@@ -10,6 +10,11 @@ const codeAnalyzerPath = `/Users/gbarker/GitHub/CodeAnalyzer/src/main/`;
 const revmanPath = `/Users/gbarker/git/revman/force-app/main/default/classes/`;
 
 function printDirectoryAnalysis(dirPath: string) {
+  printLineLimits(dirPath);
+  printTypeLimits(dirPath);
+}
+
+function printLineLimits(dirPath: string) {
   const dataRetriever: DataRetriever = new DataRetriever(dirPath);
   let directoryData = dataRetriever.getFileData();
   directoryData = directoryData.map(fileData => {
@@ -25,9 +30,11 @@ function printDirectoryAnalysis(dirPath: string) {
     .withNumberOfSpacesAtStartOfColumns(2)
     .withNumberOfSpacesAtEndOfColumns(2)
     .print();
+}
 
-  directoryData = dataRetriever.getFileData();
-  directoryData = directoryData.map(fileData => {
+function printTypeLimits(dirPath: string) {
+  const dataRetriever: DataRetriever = new DataRetriever(dirPath);
+  const directoryData = dataRetriever.getFileData().map(fileData => {
     const selector = new TypeLimitBlockSelector(fileData.getCodeBlocks());
     return new FileData(fileData.getFileName(), selector.getBlocksOverTypeLimit());
   });
@@ -35,8 +42,8 @@ function printDirectoryAnalysis(dirPath: string) {
   const typeLimitData = new TypeLimitTableFormatter(directoryData).getTableData();
   const typeLimitTaybl = new Taybl({ files: typeLimitData });
   typeLimitTaybl
-    .withHorizontalLineStyle("=")
-    .withVerticalLineStyle(":")
+    .withHorizontalLineStyle(" ")
+    .withVerticalLineStyle("|")
     .withNumberOfSpacesAtStartOfColumns(2)
     .withNumberOfSpacesAtEndOfColumns(2)
     .print();
