@@ -1,7 +1,17 @@
 {
   "lineLimit": {
-    "function": 6,
-    "class": 50,
-    "loop": 5
+    "function": 100,
+    "class": 200,
+    "loop": 100,
+    "if": 100,
+    "collection": 200,
+    "interface": 30
+  },
+  "typeLimit": {
+    "function": 50,
+    "class": 5,
+    "loop": 100,
+    "if": 75,
+    "interface": 6
   }
 }

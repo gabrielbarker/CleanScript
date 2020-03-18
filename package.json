@@ -1,7 +1,7 @@
 {
   "name": "codeanalyzer",
   "version": "1.0.0",
-  "description": "",
+  "description": "A tool that analyses your code based on function length and indentation depth, checking for basic code smells.",
   "scripts": {
     "setup": "npm install",
     "build": "tsc",
@@ -25,7 +25,10 @@
     "mocha": "^7.0.1",
     "nyc": "^15.0.0",
     "ts-node": "^8.6.2",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.2",
+    "minimist": ">=1.2.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "taybl": "0.0.2"
+  }
 }
