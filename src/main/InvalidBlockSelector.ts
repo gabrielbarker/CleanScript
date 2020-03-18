@@ -1,7 +1,6 @@
 import { readFileSync } from "fs";
 import CodeBlock from "./CodeBlock";
 import CodeBlockSelector from "./CodeBlockSelector";
-import { BlockType } from "./BlockType";
 
 export default class InvalidBlockSelector {
   private static readonly CONFIG_PATH = "/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json";
