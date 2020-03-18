@@ -1,12 +1,11 @@
 import DataRetriever from "./DataRetriever";
 import InvalidBlockSelector from "./InvalidBlockSelector";
-import TableData from "./TableData";
+import TableDataFormatter from "./TableDataFormatter";
 import Taybl from "taybl";
 import FileData from "./FileData";
 
 const codeAnalyzerPath = `/Users/gbarker/GitHub/CodeAnalyzer/src/main/`;
 const revmanPath = `/Users/gbarker/git/revman/force-app/main/default/classes/`;
-
 function printDirectoryAnalysis(dirPath: string) {
   const dataRetriever: DataRetriever = new DataRetriever(dirPath);
   let directoryData = dataRetriever.getFileData();
@@ -14,11 +13,12 @@ function printDirectoryAnalysis(dirPath: string) {
     const selector = new InvalidBlockSelector(fileData.getCodeBlocks());
     return new FileData(fileData.getFileName(), selector.getBlocksOverLineLimit());
   });
-  const tableData = new TableData(directoryData);
-  const taybl = new Taybl(tableData);
+  const tableData = new TableDataFormatter(directoryData).getTableData();
+
+  const taybl = new Taybl({ files: tableData });
   taybl
     .withHorizontalLineStyle("=")
-    .withVerticalLineStyle("||")
+    .withVerticalLineStyle(":")
     .withNumberOfSpacesAtStartOfColumns(2)
     .withNumberOfSpacesAtEndOfColumns(2)
     .print();
