@@ -3,26 +3,29 @@ import LineLimitBlockSelector from "./LineLimitBlockSelector";
 import TypeLimitBlockSelector from "./TypeLimitBlockSelector";
 import Taybl from "taybl";
 import FileData from "./FileData";
-import LimitBlockSelector from "./LimitBlockSelector";
 import FileFormatter from "./FileFormatter";
 import TableFormatter from "./TableFormatter";
 import TypeLimitFileFormatter from "./TypeLimitFileFormatter";
 import LineLimitFileFormatter from "./LineLimitFileFormatter";
+import InvalidSelector from "./InvalidSelector";
 
 const codeAnalyzerPath = `/Users/gbarker/GitHub/CodeAnalyzer/src/main/`;
 const revmanPath = `/Users/gbarker/git/revman/force-app/main/default/classes/`;
 
 function printDirectoryAnalysis(dirPath: string) {
   const lineSelector = new LineLimitBlockSelector();
+  const invalidLineSelector = new InvalidSelector(lineSelector);
   const lineFormatter = new LineLimitFileFormatter();
+
   const typeSelector = new TypeLimitBlockSelector();
+  const invalidTypeSelector = new InvalidSelector(typeSelector);
   const typeFormatter = new TypeLimitFileFormatter();
 
-  printLimits(revmanPath, lineSelector, lineFormatter);
-  printLimits(revmanPath, typeSelector, typeFormatter);
+  printLimits(revmanPath, invalidLineSelector, lineFormatter);
+  printLimits(revmanPath, invalidTypeSelector, typeFormatter);
 }
 
-function printLimits(dirPath: string, selector: LimitBlockSelector, formatter: FileFormatter) {
+function printLimits(dirPath: string, selector: InvalidSelector, formatter: FileFormatter) {
   const dataRetriever: DataRetriever = new DataRetriever(dirPath);
   const directoryData = dataRetriever.getFileData().map(fileData => {
     return new FileData(
