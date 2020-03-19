@@ -1,8 +1,8 @@
 import CodeBlock from "./CodeBlock";
 import CodeBlockSelector from "./CodeBlockSelector";
-import LimitBlockSelector from "./LimitBlockSelector";
+import LimitSelector from "./LimitSelector";
 
-export default class TypeLimitBlockSelector implements LimitBlockSelector {
+export default class TypeLimitSelector implements LimitSelector {
   private codeBlocks: CodeBlock[] = [];
   private configSection: any = {};
 
