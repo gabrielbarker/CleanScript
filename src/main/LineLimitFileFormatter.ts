@@ -2,8 +2,8 @@ import FileData from "./FileData";
 import CodeBlock from "./CodeBlock";
 import FileFormatter from "./FileFormatter";
 
-export type TypeTableData = { Type: string; Count: number; "Line Numbers": string };
-export type FileTableData = { "File Name": string; invalid: TypeTableData[] };
+type TypeTableData = { Type: string; Count: number; "Line Numbers": string };
+type FileTableData = { "File Name": string; invalid: TypeTableData[] };
 
 export default class LineLimitFileFormatter implements FileFormatter {
   private typeTable: any = {};
