@@ -1,41 +1,29 @@
-import { readFileSync } from "fs";
 import CodeBlock from "./CodeBlock";
 import CodeBlockSelector from "./CodeBlockSelector";
 import LimitBlockSelector from "./LimitBlockSelector";
 
 export default class TypeLimitBlockSelector implements LimitBlockSelector {
-  private readonly CONFIG_PATH = "/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json";
-  private analyzerConfig: any;
-  private codeBlocks: CodeBlock[];
-  private blocksOverLimit: CodeBlock[] = [];
+  private codeBlocks: CodeBlock[] = [];
+  private configSection: any = {};
 
-  constructor() {
-    const configData = readFileSync(this.CONFIG_PATH).toString();
-    this.codeBlocks = [];
-    this.analyzerConfig = JSON.parse(configData);
-  }
-
-  public getBlocksOverLimit(codeBlocks: CodeBlock[]): CodeBlock[] {
+  public getInvalidBlocks(config: any, codeBlocks: CodeBlock[]): CodeBlock[] {
     this.codeBlocks = codeBlocks;
-    this.findBlocksOverTypeLimit();
-    return this.blocksOverLimit;
+    this.configSection = config["typeLimit"];
+    return this.getBlocksOverTypeLimit();
   }
 
-  private findBlocksOverTypeLimit(): void {
-    const limits: any = this.analyzerConfig["typeLimit"];
-    const blockTypes: string[] = Object.keys(limits);
-    this.blocksOverLimit = this.getBlocksOverTypeLimitForTypes(blockTypes);
-  }
-
-  private getBlocksOverTypeLimitForTypes(blockTypes: string[]): CodeBlock[] {
-    const blocks = blockTypes
-      .map(type => {
-        const limit: number = this.analyzerConfig["typeLimit"][type];
-        const blocksOfType = this.getBlocksOfType(type);
-        if (blocksOfType.length > limit) return blocksOfType;
-      })
-      .filter(blocks => blocks !== undefined);
+  private getBlocksOverTypeLimit(): CodeBlock[] {
+    const blocks = Object.keys(this.configSection)
+      .map(type => this.getBlocksOfTypeIfOverLimit(type))
+      .filter(blocks => blocks.length !== 0);
     return Array.prototype.concat.apply([], blocks);
+  }
+
+  private getBlocksOfTypeIfOverLimit(blockType: string): CodeBlock[] {
+    const limit: number = this.configSection[blockType];
+    const blocksOfType = this.getBlocksOfType(blockType);
+    if (blocksOfType.length > limit) return blocksOfType;
+    return [];
   }
 
   private getBlocksOfType(blockType: string): CodeBlock[] {

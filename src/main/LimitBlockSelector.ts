@@ -1,5 +1,5 @@
 import CodeBlock from "./CodeBlock";
 
 export default interface LimitBlockSelector {
-  getBlocksOverLimit(codeBlocks: CodeBlock[]): CodeBlock[];
+  getInvalidBlocks(config: any, codeBlocks: CodeBlock[]): CodeBlock[];
 }

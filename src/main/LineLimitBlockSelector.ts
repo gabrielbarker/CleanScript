@@ -1,39 +1,30 @@
-import { readFileSync } from "fs";
 import CodeBlock from "./CodeBlock";
 import CodeBlockSelector from "./CodeBlockSelector";
 import LimitBlockSelector from "./LimitBlockSelector";
 
-export default class LineLimitBlockSelector implements LimitBlockSelector {
-  private readonly CONFIG_PATH = "/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json";
-  private analyzerConfig: any;
+export default class TypeLimitBlockSelector implements LimitBlockSelector {
   private codeBlocks: CodeBlock[] = [];
-  private blocksOverLimit: CodeBlock[] = [];
+  private configSection: any = {};
 
-  constructor() {
-    const configData = readFileSync(this.CONFIG_PATH).toString();
-    this.codeBlocks = [];
-    this.analyzerConfig = JSON.parse(configData);
-  }
-
-  public getBlocksOverLimit(codeBlocks: CodeBlock[]): CodeBlock[] {
+  public getInvalidBlocks(config: any, codeBlocks: CodeBlock[]): CodeBlock[] {
     this.codeBlocks = codeBlocks;
-    this.findBlocksOverLineLimit();
-    return this.blocksOverLimit;
+    this.configSection = config["lineLimit"];
+    return this.getBlocksOverLineLimit();
   }
 
-  private findBlocksOverLineLimit(): void {
-    const limits: any = this.analyzerConfig["lineLimit"];
-    const blockTypes: string[] = Object.keys(limits);
-    this.blocksOverLimit = this.getBlocksOverLineLimitForTypes(blockTypes);
+  private getBlocksOfType(blockType: string): CodeBlock[] {
+    const codeBlockSelector = new CodeBlockSelector(this.codeBlocks);
+    return codeBlockSelector.withType(blockType).getBlocks();
   }
 
-  private getBlocksOverLineLimitForTypes(blockTypes: string[]): CodeBlock[] {
+  private getBlocksOverLineLimit(): CodeBlock[] {
+    const blockTypes = Object.keys(this.configSection);
     const blocks = blockTypes.map(type => this.getBlocksOverLineLimitOfType(type));
     return Array.prototype.concat.apply([], blocks);
   }
 
   private getBlocksOverLineLimitOfType(blockType: string): CodeBlock[] {
-    const limit: number = this.analyzerConfig["lineLimit"][blockType];
+    const limit: number = this.configSection[blockType];
     const codeBlockSelector = new CodeBlockSelector(this.codeBlocks);
     return codeBlockSelector
       .withLengthMoreThan(limit)
