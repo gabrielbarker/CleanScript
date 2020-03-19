@@ -4,13 +4,13 @@ import CodeBlockSelector from "./CodeBlockSelector";
 import LimitBlockSelector from "./LimitBlockSelector";
 
 export default class LineLimitBlockSelector implements LimitBlockSelector {
-  private static readonly CONFIG_PATH = "/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json";
+  private readonly CONFIG_PATH = "/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json";
   private analyzerConfig: any;
   private codeBlocks: CodeBlock[] = [];
   private blocksOverLimit: CodeBlock[] = [];
 
   constructor() {
-    const configData = readFileSync(LineLimitBlockSelector.CONFIG_PATH).toString();
+    const configData = readFileSync(this.CONFIG_PATH).toString();
     this.codeBlocks = [];
     this.analyzerConfig = JSON.parse(configData);
   }
