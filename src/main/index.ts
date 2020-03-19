@@ -1,6 +1,6 @@
 import DataRetriever from "./DataRetriever";
-import LineLimitBlockSelector from "./LineLimitBlockSelector";
-import TypeLimitBlockSelector from "./TypeLimitBlockSelector";
+import LineLimitSelector from "./LineLimitSelector";
+import TypeLimitSelector from "./TypeLimitSelector";
 import Taybl from "taybl";
 import FileData from "./FileData";
 import FileFormatter from "./FileFormatter";
@@ -13,11 +13,11 @@ const codeAnalyzerPath = `/Users/gbarker/GitHub/CodeAnalyzer/src/main/`;
 const revmanPath = `/Users/gbarker/git/revman/force-app/main/default/classes/`;
 
 function printDirectoryAnalysis(dirPath: string) {
-  const lineSelector = new LineLimitBlockSelector();
+  const lineSelector = new LineLimitSelector();
   const invalidLineSelector = new InvalidSelector(lineSelector);
   const lineFormatter = new LineLimitFileFormatter();
 
-  const typeSelector = new TypeLimitBlockSelector();
+  const typeSelector = new TypeLimitSelector();
   const invalidTypeSelector = new InvalidSelector(typeSelector);
   const typeFormatter = new TypeLimitFileFormatter();
 
