@@ -12,11 +12,6 @@ export default class TypeLimitBlockSelector implements LimitBlockSelector {
     return this.getBlocksOverLineLimit();
   }
 
-  private getBlocksOfType(blockType: string): CodeBlock[] {
-    const codeBlockSelector = new CodeBlockSelector(this.codeBlocks);
-    return codeBlockSelector.withType(blockType).getBlocks();
-  }
-
   private getBlocksOverLineLimit(): CodeBlock[] {
     const blockTypes = Object.keys(this.configSection);
     const blocks = blockTypes.map(type => this.getBlocksOverLineLimitOfType(type));
