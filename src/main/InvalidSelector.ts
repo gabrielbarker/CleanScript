@@ -1,31 +1,19 @@
 import { readFileSync } from "fs";
 import CodeBlock from "./CodeBlock";
-import LimitBlockSelector from "./LimitBlockSelector";
+import LimitSelector from "./LimitSelector";
 
 export default class InvalidSelector {
   private readonly CONFIG_PATH = "/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json";
   private analyzerConfig: any;
-  private codeBlocks: CodeBlock[];
-  private blocksOverLimit: CodeBlock[] = [];
-  private limitBlockSelector: LimitBlockSelector;
+  private limitSelector: LimitSelector;
 
-  constructor(limitBlockSelector: LimitBlockSelector) {
+  constructor(limitSelector: LimitSelector) {
     const configData = readFileSync(this.CONFIG_PATH).toString();
-    this.codeBlocks = [];
     this.analyzerConfig = JSON.parse(configData);
-    this.limitBlockSelector = limitBlockSelector;
+    this.limitSelector = limitSelector;
   }
 
   public getBlocksOverLimit(codeBlocks: CodeBlock[]): CodeBlock[] {
-    this.codeBlocks = codeBlocks;
-    this.findBlocksOverTypeLimit();
-    return this.blocksOverLimit;
-  }
-
-  private findBlocksOverTypeLimit(): void {
-    this.blocksOverLimit = this.limitBlockSelector.getInvalidBlocks(
-      this.analyzerConfig,
-      this.codeBlocks
-    );
+    return this.limitSelector.getInvalidBlocks(this.analyzerConfig, codeBlocks);
   }
 }
