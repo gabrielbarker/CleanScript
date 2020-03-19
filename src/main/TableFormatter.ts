@@ -1,9 +1,8 @@
 import FileData from "./FileData";
-import LineLimitFileFormatter, { FileTableData } from "./LineLimitFileFormatter";
 import FileFormatter from "./FileFormatter";
 
 export default class TableFormatter {
-  private tableData: FileTableData[] = [];
+  private tableData: {}[] = [];
 
   constructor(filesData: FileData[], formatter: FileFormatter) {
     filesData.forEach(fileData => {
@@ -12,7 +11,7 @@ export default class TableFormatter {
     });
   }
 
-  public getTableData(): FileTableData[] {
+  public getTableData(): {}[] {
     return this.tableData;
   }
 }
