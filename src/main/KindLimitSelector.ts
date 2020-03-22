@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import CodeBlock from "./CodeBlock";
 import CodeBlockSelector from "./CodeBlockSelector";
 
-export default class LineLimitSelector {
+export default class KindLimitSelector {
   private kindLimits: any;
   private blocks: CodeBlock[] = [];
   private invalidBlocks: CodeBlock[][] = [];
