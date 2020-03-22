@@ -4,7 +4,7 @@ import CodeBlockSelector from "./CodeBlockSelector";
 import LimitSelector from "./LimitSelector";
 
 export default class LineLimitSelector implements LimitSelector {
-  private readonly CONFIG_PATH = "/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json";
+  private readonly CONFIG_PATH = "/Users/gbarker/GitHub/TypeSniff/analyzer.json";
   private limits: any;
 
   constructor() {
