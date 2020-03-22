@@ -16,7 +16,12 @@ export default class CodeBlockSelector {
     return new CodeBlockSelector(blocks);
   }
 
-  public withNumberOfLinesMoreThan(limit: number) {
+  public withFileName(name: string): CodeBlockSelector {
+    const blocks = this.blocks.filter(block => block.fileName === name);
+    return new CodeBlockSelector(blocks);
+  }
+
+  public withNumberOfLinesMoreThan(limit: number): CodeBlockSelector {
     const blocks = this.blocks.filter(block => block.numberOfLines > limit);
     return new CodeBlockSelector(blocks);
   }
