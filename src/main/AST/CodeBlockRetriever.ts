@@ -17,10 +17,10 @@ export default class CodeBlockRetriever {
     return this.blocks;
   }
 
-  private extractBlocksRecursively(node: ts.Node) {
+  private extractBlocksRecursively = (node: ts.Node) => {
     this.extractBlock(node);
     node.forEachChild(this.extractBlocksRecursively);
-  }
+  };
 
   private extractBlock(node: ts.Node) {
     this.blocks.push(this.getBlockFromNode(node));
