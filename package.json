@@ -24,11 +24,12 @@
     "chai": "^4.2.0",
     "codecov": "^3.6.5",
     "glob": "^7.1.6",
-    "minimist": ">=1.2.3",
+    "minimist": ">=1.2.3"
     "mocha": "^7.1.1",
     "nyc": "^15.0.0",
     "ts-node": "^8.6.2",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.2",
+    "minimist": ">=1.2.2"
   },
   "dependencies": {
     "taybl": "0.0.2"
