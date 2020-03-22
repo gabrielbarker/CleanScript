@@ -1,29 +1,25 @@
+import { readFileSync } from "fs";
 import CodeBlock from "./CodeBlock";
 import CodeBlockSelector from "./CodeBlockSelector";
-import LimitSelector from "./LimitSelector";
 
-export default class LineLimitSelector implements LimitSelector {
-  private codeBlocks: CodeBlock[] = [];
-  private configSection: any = {};
+export default class LineLimitSelector {
+  private lineLimits: any;
+  private blocks: CodeBlock[] = [];
+  private invalidBlocks: CodeBlock[][] = [];
 
-  public getInvalidBlocks(config: any, codeBlocks: CodeBlock[]): CodeBlock[] {
-    this.codeBlocks = codeBlocks;
-    this.configSection = config["lineLimit"];
-    return this.getBlocksOverLineLimit();
+  constructor(blocks: CodeBlock[]) {
+    this.lineLimits = JSON.parse(readFileSync("../../analyzer.json").toString())["lineLimit"];
+    this.blocks = blocks;
   }
 
-  private getBlocksOverLineLimit(): CodeBlock[] {
-    const blockTypes = Object.keys(this.configSection);
-    const blocks = blockTypes.map(type => this.getBlocksOverLineLimitOfType(type));
-    return Array.prototype.concat.apply([], blocks);
-  }
-
-  private getBlocksOverLineLimitOfType(blockType: string): CodeBlock[] {
-    const limit: number = this.configSection[blockType];
-    const codeBlockSelector = new CodeBlockSelector(this.codeBlocks);
-    return codeBlockSelector
-      .withLengthMoreThan(limit)
-      .withType(blockType)
-      .getBlocks();
+  public getBlocks() {
+    const blockSelector = new CodeBlockSelector(this.blocks);
+    this.invalidBlocks = Object.keys(this.lineLimits).map(kind =>
+      blockSelector
+        .withKind(kind)
+        .withNumberOfLinesMoreThan(this.lineLimits[kind])
+        .getBlocks()
+    );
+    return Array.prototype.concat.apply([], this.invalidBlocks);
   }
 }
