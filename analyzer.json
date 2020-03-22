@@ -1,17 +1,16 @@
 {
   "lineLimit": {
-    "function": 100,
-    "class": 200,
-    "loop": 100,
-    "if": 100,
-    "collection": 200,
-    "interface": 30
+    "function": 8,
+    "class": 100,
+    "loop": 8,
+    "if": 8,
+    "interface": 5
   },
   "typeLimit": {
-    "function": 50,
-    "class": 5,
-    "loop": 100,
-    "if": 75,
-    "interface": 6
+    "function": 10,
+    "class": 1,
+    "loop": 3,
+    "if": 4,
+    "interface": 1
   }
 }
