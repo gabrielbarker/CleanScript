@@ -12,8 +12,5 @@ before_script:
   - npm run setup
   - npm run build
 
-script:
-  - npm run test
-
 after_success:
   - codecov
