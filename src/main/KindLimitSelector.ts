@@ -8,7 +8,7 @@ export default class KindLimitSelector implements LimitSelector {
   constructor() {
     this.kindLimits = JSON.parse(
       readFileSync("/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json").toString()
-    )["typeLimit"];
+    )["type limits"];
   }
 
   public getBlocks(blocks: CodeBlock[]): any[] {

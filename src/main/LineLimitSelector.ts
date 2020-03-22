@@ -8,7 +8,7 @@ export default class LineLimitSelector implements LimitSelector {
   private limits: any;
 
   constructor() {
-    this.limits = JSON.parse(readFileSync(this.CONFIG_PATH).toString())["lineLimit"];
+    this.limits = JSON.parse(readFileSync(this.CONFIG_PATH).toString())["line limits"];
   }
 
   public getBlocks(blocksOfSameKind: CodeBlock[]): any[] {

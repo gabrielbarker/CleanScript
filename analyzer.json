@@ -1,12 +1,12 @@
 {
-  "lineLimit": {
+  "line limits": {
     "function": 8,
     "class": 100,
     "loop": 8,
     "if": 8,
     "interface": 5
   },
-  "typeLimit": {
+  "type limits": {
     "function": 10,
     "class": 1,
     "loop": 3,
