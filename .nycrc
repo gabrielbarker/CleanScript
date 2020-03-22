@@ -8,7 +8,7 @@
   "exclude": [
     "coverage/**",
     "node_modules/**",
-    "**/*.d.ts",
+    "dist",
     "src/test",
     "src/index.ts"
   ],
