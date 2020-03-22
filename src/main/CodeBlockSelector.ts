@@ -1,29 +1,28 @@
 import CodeBlock from "./CodeBlock";
-import { BlockType } from "./BlockType";
 
 export default class CodeBlockSelector {
-  private codeBlocks: CodeBlock[];
+  private blocks: CodeBlock[] = [];
 
-  constructor(codeBlocks: CodeBlock[]) {
-    this.codeBlocks = codeBlocks;
-  }
-
-  public withIndentationLevel(level: number): CodeBlockSelector {
-    const codeBlocks = this.codeBlocks.filter(block => block.getIndentationLevel() === level);
-    return new CodeBlockSelector(codeBlocks);
-  }
-
-  public withType(type: BlockType): CodeBlockSelector {
-    const codeBlocks = this.codeBlocks.filter(block => block.getType() === type);
-    return new CodeBlockSelector(codeBlocks);
-  }
-
-  public withLengthMoreThan(numberOfLines: number): CodeBlockSelector {
-    const codeBlocks = this.codeBlocks.filter(block => block.getNumberOfLines() > numberOfLines);
-    return new CodeBlockSelector(codeBlocks);
+  constructor(blocks: CodeBlock[]) {
+    this.blocks = blocks;
   }
 
   public getBlocks(): CodeBlock[] {
-    return this.codeBlocks;
+    return this.blocks;
+  }
+
+  public withKind(...kind: string[]): CodeBlockSelector {
+    const blocks = this.blocks.filter(block => kind.includes(block.kind));
+    return new CodeBlockSelector(blocks);
+  }
+
+  public withFileName(name: string): CodeBlockSelector {
+    const blocks = this.blocks.filter(block => block.fileName === name);
+    return new CodeBlockSelector(blocks);
+  }
+
+  public withNumberOfLinesMoreThan(limit: number): CodeBlockSelector {
+    const blocks = this.blocks.filter(block => block.numberOfLines > limit);
+    return new CodeBlockSelector(blocks);
   }
 }
