@@ -1,23 +1,18 @@
 import { readFileSync } from "fs";
 import CodeBlock from "./CodeBlock";
-import CodeBlockSelector from "./CodeBlockSelector";
+import LimitSelector from "./LimitSelector";
 
-export default class KindLimitSelector {
+export default class KindLimitSelector implements LimitSelector {
   private kindLimits: any;
-  private blocks: CodeBlock[] = [];
-  private invalidBlocks: CodeBlock[][] = [];
 
-  constructor(blocks: CodeBlock[]) {
-    this.kindLimits = JSON.parse(readFileSync("../../analyzer.json").toString())["typeLimit"];
-    this.blocks = blocks;
+  constructor() {
+    this.kindLimits = JSON.parse(
+      readFileSync("/Users/gbarker/GitHub/CodeAnalyzer/analyzer.json").toString()
+    )["typeLimit"];
   }
 
-  public getBlocks() {
-    const blockSelector = new CodeBlockSelector(this.blocks);
-    this.invalidBlocks = Object.keys(this.kindLimits).map(kind => {
-      const blocksOfKind = blockSelector.withKind(kind).getBlocks();
-      return blocksOfKind.length > this.kindLimits[kind] ? blocksOfKind : [];
-    });
-    return Array.prototype.concat.apply([], this.invalidBlocks);
+  public getBlocks(blocks: CodeBlock[]): any[] {
+    const kind = blocks[0].kind;
+    return blocks.length > this.kindLimits[kind] ? blocks : [];
   }
 }
