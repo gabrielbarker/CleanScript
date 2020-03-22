@@ -27,7 +27,7 @@ export default class CodeBlockRetriever {
   }
 
   private getBlockFromNode(node: ts.Node): CodeBlock {
-    const lineNumber: number = this.ast.getLineAndCharacterOfPosition(node.pos).line;
+    const lineNumber: number = this.ast.getLineAndCharacterOfPosition(node.getStart()).line + 1;
     const endLineNumber: number = this.ast.getLineAndCharacterOfPosition(node.end).line;
     return new CodeBlock(
       this.fileName,

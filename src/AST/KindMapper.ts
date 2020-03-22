@@ -17,7 +17,9 @@ export default class KindMapper {
   }
 
   private static isFunction(node: ts.Node) {
-    return ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node);
+    return (
+      ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node) || ts.isArrowFunction(node)
+    );
   }
 
   private static isLoop(node: ts.Node) {

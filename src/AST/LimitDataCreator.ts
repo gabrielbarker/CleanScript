@@ -1,15 +1,19 @@
 import CodeBlock from "./CodeBlock";
 import CodeBlockSelector from "./CodeBlockSelector";
+import KindObjectCreator from "./KindLimitSubObjectCreator";
+import SubObjectCreator from "./SubObjectCreator";
 
 type FileObject = { fileName: string; invalid: KindObject[] };
 type KindObject = { kind: string; count: number; "line numbers": string };
 
-export default class TayblDataCreator {
+export default class LimitDataCreator {
   private blocks: CodeBlock[];
   private fileObjects: FileObject[] = [];
+  private subObjectCreator: SubObjectCreator;
 
-  constructor(blocks: CodeBlock[]) {
+  constructor(blocks: CodeBlock[], subObjectCreator: SubObjectCreator) {
     this.blocks = blocks;
+    this.subObjectCreator = subObjectCreator;
     this.createFileObjects();
   }
 
@@ -50,10 +54,6 @@ export default class TayblDataCreator {
   }
 
   private createKindObject(blocks: CodeBlock[]): KindObject {
-    return {
-      kind: blocks[0].kind,
-      count: blocks.length,
-      "line numbers": blocks.map(block => block.lineNumber).join(",")
-    };
+    return this.subObjectCreator.createObject(blocks);
   }
 }
