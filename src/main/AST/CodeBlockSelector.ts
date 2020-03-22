@@ -7,7 +7,11 @@ export default class CodeBlockSelector {
     this.blocks = blocks;
   }
 
-  public withKind(...kind: number[]) {
+  public getBlocks(): CodeBlock[] {
+    return this.blocks;
+  }
+
+  public withKind(...kind: string[]): CodeBlockSelector {
     const blocks = this.blocks.filter(block => kind.includes(block.kind));
     return new CodeBlockSelector(blocks);
   }

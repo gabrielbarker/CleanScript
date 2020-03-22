@@ -1,5 +1,6 @@
 import ts from "typescript";
 import CodeBlock from "./CodeBlock";
+import KindMapper from "./KindMapper";
 
 export default class CodeBlockRetriever {
   private ast: ts.SourceFile;
@@ -30,7 +31,7 @@ export default class CodeBlockRetriever {
     const endLineNumber: number = this.ast.getLineAndCharacterOfPosition(node.end).line;
     return new CodeBlock(
       this.fileName,
-      node.kind,
+      KindMapper.kindOf(node),
       node.getText(),
       lineNumber,
       endLineNumber - lineNumber
