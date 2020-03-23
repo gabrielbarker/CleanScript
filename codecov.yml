@@ -1,2 +1,0 @@
-fixes:
-  - "before/tests/**::after/test/**"
