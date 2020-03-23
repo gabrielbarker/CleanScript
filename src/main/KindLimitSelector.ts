@@ -7,7 +7,7 @@ export default class KindLimitSelector implements LimitSelector {
 
   constructor() {
     this.kindLimits = JSON.parse(
-      readFileSync("/Users/gbarker/GitHub/TypeSniff/analyzer.json").toString()
+      readFileSync("/Users/gbarker/GitHub/CleanScript/analyzer.json").toString()
     )["type limits"];
   }
 

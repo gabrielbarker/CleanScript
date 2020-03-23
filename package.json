@@ -1,5 +1,5 @@
 {
-  "name": "typesniff",
+  "name": "cleanscript",
   "version": "1.0.0",
   "description": "A tool that analyses your code based on function length and indentation depth, checking for basic code smells.",
   "scripts": {
@@ -18,7 +18,7 @@
   "types": "./dist/src/index.d.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gabrielbarker/TypeSniff.git"
+    "url": "https://github.com/gabrielbarker/CleanScript.git"
   },
   "devDependencies": {
     "@types/chai": "^4.2.9",
