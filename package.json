@@ -8,7 +8,7 @@
     "build-watch": "tsc --watch",
     "pretest": "npm run build",
     "test-only": "mocha -r ts-node/register src/test/**/*.ts",
-    "test": "nyc npm run test-only",
+    "test": "nyc --reporter=lcov npm run test-only",
     "posttest": "nyc report --reporter=json",
     "start": "npm run build && node ./dist/main/index.js"
   },
@@ -16,6 +16,10 @@
   "license": "ISC",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gabrielbarker/TypeSniff.git"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.9",
     "@types/glob": "^7.1.1",
