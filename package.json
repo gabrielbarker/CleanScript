@@ -8,8 +8,8 @@
     "build-watch": "tsc --watch",
     "pretest": "npm run build",
     "test-only": "mocha -r ts-node/register src/test/**/*.ts",
-    "test": "nyc --reporter=lcov npm run test-only",
-    "posttest": "nyc report --reporter=json",
+    "test": "nyc --reporter=json npm run test-only",
+    "posttest": "nyc report",
     "start": "npm run build && node ./dist/main/index.js"
   },
   "author": "",
