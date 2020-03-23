@@ -6,10 +6,9 @@ node_js:
 
 install:
   - npm uninstall typescript --no-save
-  - npm install
+  - npm run setup
 
 before_script:
-  - npm run setup
   - npm run build
 
 script:
