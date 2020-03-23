@@ -1,14 +1,11 @@
-import { readFileSync } from "fs";
 import CodeBlock from "./CodeBlock";
 import LimitSelector from "./LimitSelector";
 
 export default class KindLimitSelector implements LimitSelector {
   private kindLimits: any;
 
-  constructor() {
-    this.kindLimits = JSON.parse(
-      readFileSync("/Users/gbarker/GitHub/CleanScript/analyzer.json").toString()
-    )["type limits"];
+  constructor(config: any) {
+    this.kindLimits = config["type limits"];
   }
 
   public getBlocks(blocks: CodeBlock[]): any[] {
