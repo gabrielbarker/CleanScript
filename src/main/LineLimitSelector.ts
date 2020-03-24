@@ -9,7 +9,7 @@ export default class LineLimitSelector implements LimitSelector {
     this.limits = config["line limits"];
   }
 
-  public getBlocks(blocksOfSameKind: CodeBlock[]): any[] {
+  public getBlocks(blocksOfSameKind: CodeBlock[]): CodeBlock[] {
     const kind = blocksOfSameKind[0].kind;
     const blockSelector = new CodeBlockSelector(blocksOfSameKind);
     return blockSelector.withNumberOfLinesMoreThan(this.limits[kind]).getBlocks();

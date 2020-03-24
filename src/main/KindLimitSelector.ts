@@ -8,7 +8,7 @@ export default class KindLimitSelector implements LimitSelector {
     this.kindLimits = config["type limits"];
   }
 
-  public getBlocks(blocks: CodeBlock[]): any[] {
+  public getBlocks(blocks: CodeBlock[]): CodeBlock[] {
     const kind = blocks[0].kind;
     return blocks.length > this.kindLimits[kind] ? blocks : [];
   }
