@@ -1,17 +1,17 @@
-line_limits:
-  - class: 5000
-  - interface: 5
-  - enum: 5
-  - function: 8
-  - loop: 8
-  - switch: 8
-  - if: 8
+line_limits: # These are limits on the number of lines in a given block type
+  - class: 100 # Maximum number of lines in a class
+  - interface: 5 # Maximum number of lines in an interface
+  - enum: 5 # Maximum number of lines in an enum
+  - function: 8 # Maximum number of lines in a function
+  - loop: 8 # Maximum number of lines inside a loop
+  - switch: 8 # Maximum number of lines in a switch-block
+  - if: 8 # Maximum number of lines in an if-block
 
-type_limits:
-  - class: 100
-  - interface: 5
-  - enum: 5
-  - function: 8
-  - loop: 8
-  - switch: 8
-  - if: 8
+type_limits: # These are limits on the number of a given block type in a file
+  - class: 100 # Maximum number of classes in a given file
+  - interface: 5 # Maximum number of interfaces in a given file
+  - enum: 5 # Maximum number of enums in a given file
+  - function: 8 # Maximum number of functions in a given file
+  - loop: 8 # Maximum number of loops in a given file
+  - switch: 8 # Maximum number of switch-blocks in a given file
+  - if: 8 # Maximum number of if-blocks in a given file
