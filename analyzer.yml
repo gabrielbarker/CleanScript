@@ -1,0 +1,17 @@
+line_limits:
+  - class: 5000
+  - interface: 5
+  - enum: 5
+  - function: 8
+  - loop: 8
+  - switch: 8
+  - if: 8
+
+type_limits:
+  - class: 100
+  - interface: 5
+  - enum: 5
+  - function: 8
+  - loop: 8
+  - switch: 8
+  - if: 8
