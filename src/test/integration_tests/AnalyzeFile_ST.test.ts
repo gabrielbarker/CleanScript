@@ -70,7 +70,7 @@ function getBlocksFrom(glob: string) {
 
 function getConfig() {
   return {
-    "line limits": {
+    line_limits: {
       class: 0,
       interface: 0,
       enum: 0,
@@ -79,7 +79,7 @@ function getConfig() {
       switch: 0,
       if: 0
     },
-    "type limits": {
+    type_limits: {
       class: 1,
       interface: 1,
       enum: 1,

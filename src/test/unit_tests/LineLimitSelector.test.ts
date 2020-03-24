@@ -4,11 +4,7 @@ import TestCodeBlockCreator from "./TestCodeBlockCreator";
 import LineLimitSelector from "../../main/LineLimitSelector";
 
 const LIMIT = 5;
-const CONFIG = {
-  "line limits": {
-    function: LIMIT
-  }
-};
+const CONFIG = { line_limits: { function: LIMIT } };
 
 describe("Line Limit Selector: getBlocks - list of blocks of same kind", () => {
   const lineLimitSelector = new LineLimitSelector(CONFIG);
