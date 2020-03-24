@@ -4,7 +4,7 @@
   "extension": [
     ".ts"
   ],
-  "include": ["src/*"],
+  "include": ["src/main"],
   "exclude": [
     "coverage/**",
     "node_modules/**",
