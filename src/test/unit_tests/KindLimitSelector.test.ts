@@ -4,11 +4,7 @@ import TestCodeBlockCreator from "./TestCodeBlockCreator";
 import KindLimitSelector from "../../main/KindLimitSelector";
 
 const LIMIT = 5;
-const CONFIG = {
-  "type limits": {
-    function: LIMIT
-  }
-};
+const CONFIG = { type_limits: { function: LIMIT } };
 
 describe("Kind Limit Selector: getBlocks - list of blocks of same kind not exceeding limits", () => {
   const kindLimitSelector = new KindLimitSelector(CONFIG);

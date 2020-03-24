@@ -5,7 +5,7 @@ export default class KindLimitSelector implements LimitSelector {
   private kindLimits: any;
 
   constructor(config: any) {
-    this.kindLimits = config["type limits"];
+    this.kindLimits = config.type_limits;
   }
 
   public getBlocks(blocks: CodeBlock[]): CodeBlock[] {

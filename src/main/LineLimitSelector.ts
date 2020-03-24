@@ -6,7 +6,7 @@ export default class LineLimitSelector implements LimitSelector {
   private limits: any;
 
   constructor(config: any) {
-    this.limits = config["line limits"];
+    this.limits = config.line_limits;
   }
 
   public getBlocks(blocksOfSameKind: CodeBlock[]): CodeBlock[] {

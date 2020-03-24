@@ -36,6 +36,8 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "@types/js-yaml": "^3.12.2",
+    "js-yaml": "^3.13.1",
     "taybl": "0.0.2"
   }
 }
