@@ -9,6 +9,7 @@ import KindLimitSubObjectCreator from "../../main/KindLimitSubObjectCreator";
 import LineLimitSelector from "../../main/LineLimitSelector";
 import KindLimitSelector from "../../main/KindLimitSelector";
 import FilePathRetriever from "../../main/FilePathRetriever";
+import ArrayFlattener from "../../main/ArrayFlattener";
 
 const filePath = __dirname + "/TestTypeScriptFile.ts";
 const expectedFromTestFile: any = {
@@ -65,7 +66,7 @@ function getBlocksFrom(glob: string) {
     const blockRetriever = new CodeBlockRetriever(ast);
     return blockRetriever.getBlocks();
   });
-  return Array.prototype.concat.apply([], allBlocks);
+  return ArrayFlattener.flatten(allBlocks);
 }
 
 function getConfig() {
