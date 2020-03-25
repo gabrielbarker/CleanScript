@@ -3,7 +3,7 @@ import ConfigRetriever from "../main/ConfigRetriever";
 import ASTRetriever from "../main/ASTRetriever";
 import CodeBlock from "../main/CodeBlock";
 import CodeBlockRetriever from "../main/CodeBlockRetriever";
-import DataCreator from "../main/LimitDataCreator";
+import LimitDataCreator from "../main/LimitDataCreator";
 import KindLimitSubObjectCreator from "../main/KindLimitSubObjectCreator";
 import LineLimitSubObjectCreator from "../main/LineLimitSubObjectCreator";
 import LineLimitSelector from "../main/LineLimitSelector";
@@ -27,7 +27,7 @@ export default class Analyzer {
   public print() {
     if (!this.paths.length)
       return console.log("There are no TypeScript or JavaScript files in this directory");
-    else this.printData();
+    else this.printIfConfigured();
   }
 
   private getPaths(globOrPath: string): string[] {
@@ -52,21 +52,35 @@ export default class Analyzer {
     this.blocks = ArrayFlattener.flatten(allBlocks);
   }
 
-  private printData() {
-    const lineData = this.getLineData();
-    const kindData = this.getKindData();
-    this.printTables(lineData, kindData);
+  private printIfConfigured() {
+    if (this.config.line_limits && Object.keys(this.config.line_limits).length)
+      this.printLineLimitsTable();
+    if (this.config.type_limits && Object.keys(this.config.type_limits).length)
+      this.printKindLimitsTable();
   }
 
-  private printTables(lineData: any, kindData: any) {
-    console.log("\nLINE LIMITS:");
-    this.printTaybl(lineData);
-    console.log("\nTYPE LIMITS:");
-    this.printTaybl(kindData);
+  private printLineLimitsTable() {
+    const congratsMessage = "None of these files violate the line limits! Congrats!";
+    const lineData = this.getLineData();
+    if (!lineData.files.length) console.log(congratsMessage);
+    else {
+      console.log("\nLINE LIMITS:");
+      this.printTaybl(lineData);
+    }
+  }
+
+  private printKindLimitsTable() {
+    const congratsMessage = "None of these files violate the type limits! Congrats!";
+    const kindData = this.getKindData();
+    if (!kindData.files.length) console.log(congratsMessage);
+    else {
+      console.log("\nTYPE LIMITS:");
+      this.printTaybl(kindData);
+    }
   }
 
   private getLineData() {
-    return new DataCreator(
+    return new LimitDataCreator(
       this.blocks,
       new LineLimitSelector(this.config),
       new LineLimitSubObjectCreator()
@@ -74,7 +88,7 @@ export default class Analyzer {
   }
 
   private getKindData() {
-    return new DataCreator(
+    return new LimitDataCreator(
       this.blocks,
       new KindLimitSelector(this.config),
       new KindLimitSubObjectCreator()
