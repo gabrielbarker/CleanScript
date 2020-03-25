@@ -12,15 +12,25 @@ import FilePathRetriever from "../main/FilePathRetriever";
 
 export default class Analyzer {
   private config: any;
+  private paths: string[] = [];
+  private blocks: CodeBlock[] = [];
 
-  constructor() {
+  constructor(globOrPath: string) {
     this.config = new ConfigRetriever().getConfig();
+    this.getPaths(globOrPath);
+    if (!this.paths.length) return;
+    this.getBlocksFromPaths();
   }
 
-  public analyze(glob: string) {
-    const blocks = this.getBlocksFrom(glob);
-    const lineData = this.getLineData(blocks);
-    const kindData = this.getKindData(blocks);
+  public print() {
+    if (!this.paths.length)
+      return console.log("There are no TypeScript or JavaScript files in this directory");
+    else this.printData();
+  }
+
+  private printData() {
+    const lineData = this.getLineData();
+    const kindData = this.getKindData();
     this.printTables(lineData, kindData);
   }
 
@@ -31,32 +41,31 @@ export default class Analyzer {
     this.printTaybl(kindData);
   }
 
-  private getBlocksFrom(glob: string) {
+  private getPaths(globOrPath: string) {
     const pathRetriever = new FilePathRetriever();
-    const paths = pathRetriever.getFilePaths(glob);
-    return this.getBlocksFromPaths(paths);
+    this.paths = pathRetriever.getFilePaths(globOrPath);
   }
 
-  private getBlocksFromPaths(paths: string[]) {
+  private getBlocksFromPaths() {
     const astRetriever = new ASTRetriever();
-    const allBlocks = paths.map(path => {
+    const allBlocks = this.paths.map(path => {
       const ast = astRetriever.getAST(path);
       return new CodeBlockRetriever(ast).getBlocks();
     });
-    return Array.prototype.concat.apply([], allBlocks);
+    this.blocks = Array.prototype.concat.apply([], allBlocks);
   }
 
-  private getLineData(blocks: CodeBlock[]) {
+  private getLineData() {
     return new DataCreator(
-      blocks,
+      this.blocks,
       new LineLimitSelector(this.config),
       new LineLimitSubObjectCreator()
     ).getTayblData();
   }
 
-  private getKindData(blocks: CodeBlock[]) {
+  private getKindData() {
     return new DataCreator(
-      blocks,
+      this.blocks,
       new KindLimitSelector(this.config),
       new KindLimitSubObjectCreator()
     ).getTayblData();
