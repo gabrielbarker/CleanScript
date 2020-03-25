@@ -1,3 +1,6 @@
+ignore:
+  - ./src/test/integration_tests/TestTypeScriptFile.ts
+
 line_limits: # These are limits on the number of lines in a given block type
   class: 50 # Maximum number of lines in a class
   interface: 5 # Maximum number of lines in an interface
