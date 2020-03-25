@@ -9,6 +9,7 @@ import LineLimitSubObjectCreator from "../main/LineLimitSubObjectCreator";
 import LineLimitSelector from "../main/LineLimitSelector";
 import KindLimitSelector from "../main/KindLimitSelector";
 import FilePathRetriever from "../main/FilePathRetriever";
+import ArrayFlattener from "./ArrayFlattener";
 
 export default class Analyzer {
   private config: any;
@@ -17,8 +18,9 @@ export default class Analyzer {
 
   constructor(globOrPath: string) {
     this.config = new ConfigRetriever().getConfig();
-    this.getPaths(globOrPath);
+    this.paths = this.getPaths(globOrPath);
     if (!this.paths.length) return;
+    this.filterPaths();
     this.getBlocksFromPaths();
   }
 
@@ -26,6 +28,28 @@ export default class Analyzer {
     if (!this.paths.length)
       return console.log("There are no TypeScript or JavaScript files in this directory");
     else this.printData();
+  }
+
+  private getPaths(globOrPath: string): string[] {
+    const pathRetriever = new FilePathRetriever();
+    return pathRetriever.getFilePaths(globOrPath);
+  }
+
+  private filterPaths() {
+    const globsToIgnore: string[] = this.config.ignore;
+    if (!globsToIgnore || !globsToIgnore.length) return;
+    const nestedPathsToIgnore = globsToIgnore.map(glob => this.getPaths(glob));
+    const pathsToIgnore = ArrayFlattener.flatten(nestedPathsToIgnore);
+    this.paths = this.paths.filter(path => !pathsToIgnore.includes(path));
+  }
+
+  private getBlocksFromPaths() {
+    const astRetriever = new ASTRetriever();
+    const allBlocks = this.paths.map(path => {
+      const ast = astRetriever.getAST(path);
+      return new CodeBlockRetriever(ast).getBlocks();
+    });
+    this.blocks = ArrayFlattener.flatten(allBlocks);
   }
 
   private printData() {
@@ -39,20 +63,6 @@ export default class Analyzer {
     this.printTaybl(lineData);
     console.log("\nTYPE LIMITS:");
     this.printTaybl(kindData);
-  }
-
-  private getPaths(globOrPath: string) {
-    const pathRetriever = new FilePathRetriever();
-    this.paths = pathRetriever.getFilePaths(globOrPath);
-  }
-
-  private getBlocksFromPaths() {
-    const astRetriever = new ASTRetriever();
-    const allBlocks = this.paths.map(path => {
-      const ast = astRetriever.getAST(path);
-      return new CodeBlockRetriever(ast).getBlocks();
-    });
-    this.blocks = Array.prototype.concat.apply([], allBlocks);
   }
 
   private getLineData() {
