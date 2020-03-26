@@ -1,4 +1,4 @@
-ignore:
+ignore: # Ignore files or folders to prevent them being analyzed
   - ./src/test/integration_tests/TestTypeScriptFile.ts
 
 line_limits: # These are limits on the number of lines in a given block type
