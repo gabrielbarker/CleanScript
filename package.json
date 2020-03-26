@@ -1,7 +1,7 @@
 {
   "name": "cleanscript",
   "version": "1.0.0",
-  "description": "A tool that analyses your code based on function length and indentation depth, checking for basic code smells.",
+  "description": "A CLI tool that analyses your code based on function length and indentation depth, checking for basic impediments to readability.",
   "bin": {
     "cleanscript": "./dist/bin/main.js"
   },
