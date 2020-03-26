@@ -10,11 +10,15 @@ import LineLimitSelector from "../main/LineLimitSelector";
 import KindLimitSelector from "../main/KindLimitSelector";
 import FilePathRetriever from "../main/FilePathRetriever";
 import ArrayFlattener from "./ArrayFlattener";
+import Cleanliness from "./Cleanliness";
 
 export default class Analyzer {
   private config: any;
   private paths: string[] = [];
   private blocks: CodeBlock[] = [];
+
+  private lineData: any;
+  private kindData: any;
 
   constructor(globOrPath: string) {
     this.config = new ConfigRetriever().getConfig();
@@ -22,12 +26,17 @@ export default class Analyzer {
     if (!this.paths.length) return;
     this.filterPaths();
     this.getBlocksFromPaths();
+    this.lineData = this.getLineData();
+    this.kindData = this.getKindData();
   }
 
   public print() {
     if (!this.paths.length)
       return console.log("There are no TypeScript or JavaScript files in this directory");
-    else this.printIfConfigured();
+    else {
+      this.printIfConfigured();
+      this.printCleanlinessReport();
+    }
   }
 
   private getPaths(globOrPath: string): string[] {
@@ -60,22 +69,20 @@ export default class Analyzer {
   }
 
   private printLineLimitsTable() {
-    const congratsMessage = "None of these files violate the line limits! Congrats!";
-    const lineData = this.getLineData();
-    if (!lineData.files.length) console.log(congratsMessage);
+    const congratsMessage = "\nNone of these files violate the line limits!";
+    if (!this.lineData.files.length) console.log(congratsMessage);
     else {
       console.log("\nLINE LIMITS:");
-      this.printTaybl(lineData);
+      this.printTaybl(this.lineData);
     }
   }
 
   private printKindLimitsTable() {
-    const congratsMessage = "None of these files violate the type limits! Congrats!";
-    const kindData = this.getKindData();
-    if (!kindData.files.length) console.log(congratsMessage);
+    const congratsMessage = "\nNone of these files violate the type limits!";
+    if (!this.kindData.files.length) console.log(congratsMessage);
     else {
       console.log("\nTYPE LIMITS:");
-      this.printTaybl(kindData);
+      this.printTaybl(this.kindData);
     }
   }
 
@@ -103,5 +110,10 @@ export default class Analyzer {
       .withHorizontalLineStyle("=")
       .withVerticalLineStyle(":")
       .print();
+  }
+
+  private printCleanlinessReport() {
+    const cleanliness = new Cleanliness(this.blocks, this.lineData, this.kindData);
+    cleanliness.report();
   }
 }
