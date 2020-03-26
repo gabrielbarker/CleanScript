@@ -2,6 +2,9 @@
   "name": "cleanscript",
   "version": "1.0.0",
   "description": "A tool that analyses your code based on function length and indentation depth, checking for basic code smells.",
+  "bin": {
+    "cleanscript": "./dist/bin/main.js"
+  },
   "scripts": {
     "setup": "npm install",
     "build": "tsc",
@@ -20,6 +23,24 @@
     "type": "git",
     "url": "https://github.com/gabrielbarker/CleanScript.git"
   },
+  "directories": {
+    "bin": "./bin/",
+    "lib": "./dist/main/"
+  },
+  "files": [
+    "dist/bin",
+    "dist/main"
+  ],
+  "keywords": [
+    "analytics",
+    "clean",
+    "cli",
+    "code",
+    "helper",
+    "javascript",
+    "terminal",
+    "typescript"
+  ],
   "devDependencies": {
     "@types/chai": "^4.2.9",
     "@types/glob": "^7.1.1",
