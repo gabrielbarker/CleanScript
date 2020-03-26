@@ -20,5 +20,6 @@ after_success:
 deploy:
   provider: npm
   email: gabrielbarker@gmail.com
+  api_key: $NPM_API_TOKEN
   on:
     branch: release
