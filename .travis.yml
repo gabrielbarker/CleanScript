@@ -16,3 +16,12 @@ script:
 
 after_success:
   - codecov
+
+before_deploy:
+  - npm version patch
+
+deploy:
+  provider: npm
+  email: gabrielbarker@gmail.com
+  on:
+    branch: release
