@@ -34,6 +34,7 @@ export default class Cleanliness {
     if (this.lineCount) console.log(`Line Limits - ${linePercentage}%`);
     if (this.kindCount) console.log(`Type Limits - ${kindPercentage}%`);
     if (this.lineCount && this.kindCount) console.log(`Total       - ${totalPercentage}%`);
+    console.log();
   }
 
   private calculatePercentageFor(count: number) {
