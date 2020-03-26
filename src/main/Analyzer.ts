@@ -1,93 +1,59 @@
-import Taybl from "taybl";
 import ConfigRetriever from "../main/ConfigRetriever";
-import ASTRetriever from "../main/ASTRetriever";
 import CodeBlock from "../main/CodeBlock";
-import CodeBlockRetriever from "../main/CodeBlockRetriever";
-import DataCreator from "../main/LimitDataCreator";
-import KindLimitSubObjectCreator from "../main/KindLimitSubObjectCreator";
-import LineLimitSubObjectCreator from "../main/LineLimitSubObjectCreator";
-import LineLimitSelector from "../main/LineLimitSelector";
-import KindLimitSelector from "../main/KindLimitSelector";
-import FilePathRetriever from "../main/FilePathRetriever";
-import ArrayFlattener from "./ArrayFlattener";
+import BlockRetrieverLayer from "./BlockRetrieverLayer";
+import DataRetrieverLayer from "./DataRetrieverLayer";
+import PrinterLayer from "./PrinterLayer";
 
 export default class Analyzer {
   private config: any;
-  private paths: string[] = [];
   private blocks: CodeBlock[] = [];
+  private lineData: any;
+  private kindData: any;
+  private invalid: boolean = false;
 
   constructor(globOrPath: string) {
-    this.config = new ConfigRetriever().getConfig();
-    this.paths = this.getPaths(globOrPath);
-    if (!this.paths.length) return;
-    this.filterPaths();
-    this.getBlocksFromPaths();
+    this.getConfig();
+    this.getBlocks(globOrPath);
+    this.getData();
   }
 
   public print() {
-    if (!this.paths.length)
-      return console.log("There are no TypeScript or JavaScript files in this directory");
-    else this.printData();
+    if (this.invalid) return;
+    const printLayer = new PrinterLayer(this.config, this.lineData, this.kindData, this.blocks);
+    printLayer.print();
   }
 
-  private getPaths(globOrPath: string): string[] {
-    const pathRetriever = new FilePathRetriever();
-    return pathRetriever.getFilePaths(globOrPath);
+  private getConfig() {
+    this.config = new ConfigRetriever().getConfig();
   }
 
-  private filterPaths() {
-    const globsToIgnore: string[] = this.config.ignore;
-    if (!globsToIgnore || !globsToIgnore.length) return;
-    const nestedPathsToIgnore = globsToIgnore.map(glob => this.getPaths(glob));
-    const pathsToIgnore = ArrayFlattener.flatten(nestedPathsToIgnore);
-    this.paths = this.paths.filter(path => !pathsToIgnore.includes(path));
+  private getBlocks(globOrPath: string) {
+    const blockRetrieverLayer = new BlockRetrieverLayer(globOrPath, this.config.ignore || []);
+    this.blocks = blockRetrieverLayer.getBlocks();
+    this.validateBlocks(globOrPath);
   }
 
-  private getBlocksFromPaths() {
-    const astRetriever = new ASTRetriever();
-    const allBlocks = this.paths.map(path => {
-      const ast = astRetriever.getAST(path);
-      return new CodeBlockRetriever(ast).getBlocks();
-    });
-    this.blocks = ArrayFlattener.flatten(allBlocks);
+  private validateBlocks(globOrPath: string) {
+    const errorMessage = `There are no TypeScript or JavaScript related to the path '${globOrPath}' that contain valid blocks.`;
+    if (!this.blocks.length) {
+      console.log(errorMessage);
+      this.invalid = true;
+    }
   }
 
-  private printData() {
-    const lineData = this.getLineData();
-    const kindData = this.getKindData();
-    this.printTables(lineData, kindData);
+  private getData() {
+    if (this.invalid) return;
+    const dataRetrieverLayer = new DataRetrieverLayer(this.blocks, this.config);
+    this.lineData = dataRetrieverLayer.getLineData();
+    this.kindData = dataRetrieverLayer.getKindData();
+    this.validateData();
   }
 
-  private printTables(lineData: any, kindData: any) {
-    console.log("\nLINE LIMITS:");
-    this.printTaybl(lineData);
-    console.log("\nTYPE LIMITS:");
-    this.printTaybl(kindData);
-  }
-
-  private getLineData() {
-    return new DataCreator(
-      this.blocks,
-      new LineLimitSelector(this.config),
-      new LineLimitSubObjectCreator()
-    ).getTayblData();
-  }
-
-  private getKindData() {
-    return new DataCreator(
-      this.blocks,
-      new KindLimitSelector(this.config),
-      new KindLimitSubObjectCreator()
-    ).getTayblData();
-  }
-
-  private printTaybl(lineData: any) {
-    const lineTaybl = new Taybl(lineData);
-    lineTaybl
-      .withNumberOfSpacesAtStartOfColumns(2)
-      .withNumberOfSpacesAtEndOfColumns(2)
-      .withHorizontalLineStyle("=")
-      .withVerticalLineStyle(":")
-      .print();
+  private validateData() {
+    const errorMessage = `The returned data is not in the correct format and cannot be rendered.`;
+    if (!this.lineData.files || !this.kindData.files) {
+      console.log(errorMessage);
+      this.invalid = true;
+    }
   }
 }
