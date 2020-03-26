@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from "fs";
 import { safeLoad } from "js-yaml";
 
 export default class ConfigRetriever {
-  private static readonly CONFIG_PATH = "./.cleanscript.yml";
+  private static readonly CONFIG_PATH = "./.tidyscript.yml";
 
   public getConfig() {
     if (this.configFileExists()) return this.getActualConfig();
