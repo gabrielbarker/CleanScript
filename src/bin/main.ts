@@ -37,21 +37,21 @@ type_limits: # These are limits on the number of a given block type in a file
   switch: 1 # Maximum number of switch-blocks in a given file
   if: 4 # Maximum number of if-blocks in a given file`.trim();
 
-const configPath = "./.cleanscript.yml";
+const configPath = "./.tidyscript.yml";
 
 function initialise() {
   writeFileSync(configPath, initialConfig);
-  console.log("A cleanscript config file has been added! (.cleanscript.yml)\n");
+  console.log("A tidyscript config file has been added! (.tidyscript.yml)\n");
 }
 
 function printTitle() {
   const title = `
-   ___ _                  __           _       _   
-  / __\\ | ___  __ _ _ __ / _\\ ___ _ __(_)_ __ | |_ 
- / /  | |/ _ \\/ _' | '_ \\\\ \\ / __| '__| | '_ \\| __|
-/ /___| |  __/ (_| | | | |\\ \\ (__| |  | | |_) | |_ 
-\\____/|_|\\___|\\__,_|_| |_\\__/\\___|_|  |_| .__/ \\__|
-                                        |_|        
+  _____ _     _       ____            _       _   
+ |_   _(_) __| |_   _/ ___|  ___ _ __(_)_ __ | |_ 
+   | | | |/ _' | | | \\___ \\ / __| '__| | '_ \\| __|
+   | | | | (_| | |_| |___) | (__| |  | | |_) | |_ 
+   |_| |_|\\__,_|\\__, |____/ \\___|_|  |_| .__/ \\__|
+                |___/                  |_|        
   `;
   console.log(title);
 }
@@ -59,16 +59,16 @@ function printTitle() {
 function help() {
   const helpText = `
 
-CleanScript is a tool that identifies aspects of TypeScript and JavaScript code that may prevent it from being readable and clean.
-CleanScript can be used by running:
+TidyScript is a tool that identifies aspects of TypeScript and JavaScript code that may prevent it from being readable and clean.
+TidyScript can be used by running:
 
-  cleanscript <path>
+  tidyscript <path>
 
-CleanScript will then analyze the TypeScript and JavaScript files at that path or within that directory (or matching that glob pattern). This Analysis will be subject to some predefined default values for block length and block total per file.
+TidyScript will then analyze the TypeScript and JavaScript files at that path or within that directory (or matching that glob pattern). This Analysis will be subject to some predefined default values for block length and block total per file.
 
-Greater customizability can be gained via a CleanScript config file. Generate a CleanScript config file using:
+Greater customizability can be gained via a TidyScript config file. Generate a TidyScript config file using:
 
-  cleanscript init
+  tidyscript init
 
 Then you can enter specific limits for different types of code block. You can also ignore files that require exceptional structure.
 
