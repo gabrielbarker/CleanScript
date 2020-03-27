@@ -20,5 +20,6 @@ deploy:
   provider: npm
   email: gabrielbarker@gmail.com
   skip_cleanup: true
+  api_key: $NPM_API_TOKEN
   on:
     branch: release
