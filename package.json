@@ -1,6 +1,6 @@
 {
   "name": "tidyscript",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A CLI tool that analyses your code based on function length and indentation depth, checking for basic impediments to readability.",
   "bin": {
     "tidyscript": "./dist/bin/main.js"
