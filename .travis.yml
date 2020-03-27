@@ -20,5 +20,6 @@ after_success:
 deploy:
   provider: npm
   email: gabrielbarker@gmail.com
+  skip_cleanup: true
   on:
     branch: release
