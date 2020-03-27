@@ -5,12 +5,14 @@ import Analyzer from "../main/Analyzer";
 
 function main() {
   printTitle();
-  if (process.argv[1] === "init") {
+  if (!process.argv[2]) {
+    console.log("Please supply a path...");
+  } else if (process.argv[2] === "init") {
     initialise();
-  } else if (process.argv[1] === "--help" || process.argv[1] === "-h") {
+  } else if (process.argv[2] === "--help" || process.argv[1] === "-h") {
     help();
   } else {
-    new Analyzer(process.argv[1]).print();
+    new Analyzer(process.argv[2]).print();
   }
 }
 
