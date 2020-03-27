@@ -1,7 +1,10 @@
 {
-  "name": "cleanscript",
-  "version": "1.0.0",
-  "description": "A tool that analyses your code based on function length and indentation depth, checking for basic code smells.",
+  "name": "tidyscript",
+  "version": "0.0.2",
+  "description": "A CLI tool that analyses your code based on function length and indentation depth, checking for basic impediments to readability.",
+  "bin": {
+    "tidyscript": "./dist/bin/main.js"
+  },
   "scripts": {
     "setup": "npm install",
     "build": "tsc",
@@ -18,8 +21,26 @@
   "types": "./dist/src/index.d.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gabrielbarker/CleanScript.git"
+    "url": "https://github.com/gabrielbarker/TidyScript.git"
   },
+  "directories": {
+    "bin": "./bin/",
+    "lib": "./dist/main/"
+  },
+  "files": [
+    "dist/bin",
+    "dist/main"
+  ],
+  "keywords": [
+    "analytics",
+    "clean",
+    "cli",
+    "code",
+    "helper",
+    "javascript",
+    "terminal",
+    "typescript"
+  ],
   "devDependencies": {
     "@types/chai": "^4.2.9",
     "@types/glob": "^7.1.1",
@@ -32,9 +53,12 @@
     "mocha": "^7.1.1",
     "nyc": "^15.0.0",
     "ts-node": "^8.6.2",
+    "typemoq": "^2.1.0",
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "@types/js-yaml": "^3.12.2",
+    "js-yaml": "^3.13.1",
     "taybl": "0.0.2"
   }
 }

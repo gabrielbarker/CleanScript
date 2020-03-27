@@ -49,7 +49,7 @@ export default class LimitDataCreator {
   private createFileObject(blocks: CodeBlock[]): any {
     const selector = new CodeBlockSelector(blocks);
     const kinds = this.getAllKindsFor(blocks);
-    return { fileName: blocks[0].fileName, invalid: this.getAllKindObjects(kinds, selector) };
+    return { "file name": blocks[0].fileName, invalid: this.getAllKindObjects(kinds, selector) };
   }
 
   private getAllKindsFor(blocks: CodeBlock[]): string[] {
@@ -64,10 +64,6 @@ export default class LimitDataCreator {
   private getKindObject(kind: string, selector: CodeBlockSelector): KindObject | undefined {
     const blocksWithSameKind = selector.withKind(kind).getBlocks();
     const invalidBlocks = this.limitSelector.getBlocks(blocksWithSameKind);
-    if (invalidBlocks.length) return this.createKindObject(invalidBlocks);
-  }
-
-  private createKindObject(blocks: CodeBlock[]): KindObject {
-    return this.subObjectCreator.createObject(blocks);
+    if (invalidBlocks.length) return this.subObjectCreator.createObject(invalidBlocks);
   }
 }

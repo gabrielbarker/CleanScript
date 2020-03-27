@@ -1,0 +1,20 @@
+ignore: # Ignore files or folders to prevent them being analyzed
+  - ./src/test/integration_tests/TestTypeScriptFile.ts
+
+line_limits: # These are limits on the number of lines in a given block type
+  class: 50 # Maximum number of lines in a class
+  interface: 5 # Maximum number of lines in an interface
+  enum: 5 # Maximum number of lines in an enum
+  function: 8 # Maximum number of lines in a function
+  loop: 8 # Maximum number of lines inside a loop
+  switch: 6 # Maximum number of lines in a switch-block
+  if: 4 # Maximum number of lines in an if-block
+
+type_limits: # These are limits on the number of a given block type in a file
+  class: 1 # Maximum number of classes in a given file
+  interface: 1 # Maximum number of interfaces in a given file
+  enum: 1 # Maximum number of enums in a given file
+  function: 6 # Maximum number of functions in a given file
+  loop: 3 # Maximum number of loops in a given file
+  switch: 1 # Maximum number of switch-blocks in a given file
+  if: 2 # Maximum number of if-blocks in a given file

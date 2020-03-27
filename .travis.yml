@@ -2,7 +2,6 @@ language: node_js
 
 node_js:
   - "node"
-  - "10"
 
 install:
   - npm uninstall typescript --no-save
@@ -16,3 +15,11 @@ script:
 
 after_success:
   - codecov
+
+deploy:
+  provider: npm
+  email: gabrielbarker@gmail.com
+  skip_cleanup: true
+  api_key: $NPM_API_TOKEN
+  on:
+    branch: release
