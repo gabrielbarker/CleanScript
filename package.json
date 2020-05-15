@@ -43,12 +43,10 @@
   ],
   "devDependencies": {
     "@types/chai": "^4.2.9",
-    "@types/glob": "^7.1.1",
     "@types/mocha": "^7.0.1",
     "@types/node": "^13.7.4",
     "chai": "^4.2.0",
     "codecov": "^3.6.5",
-    "glob": "^7.1.6",
     "minimist": ">=1.2.3",
     "mocha": "^7.1.1",
     "nyc": "^15.0.0",
@@ -57,7 +55,9 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "@types/glob": "^7.1.1",
     "@types/js-yaml": "^3.12.2",
+    "glob": "^7.1.6",
     "js-yaml": "^3.13.1",
     "taybl": "0.0.2"
   }
